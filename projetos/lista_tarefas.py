@@ -6,15 +6,16 @@ tarefas = []
 
 while True:
     
-    print("\n--- MENU ---")
-    print("1. Adicionar Tarefa")
-    print("2. Listar Tarefas")
-    print("3. Sair")
+    print('\n--- MENU ---')
+    print('1. Adicionar Tarefa')
+    print('2. Listar Tarefas')
+    print('3. Apagar uma tarefa')
+    print('4. Sair')
     
-    opcao = input("Escolha uma opção: ")
+    opcao = input('Escolha uma opção: ')
 
     if opcao == '1':
-        print("Você escolheu adicionar...")
+        print('Você escolheu adicionar...')
         # Aqui vamos escrever a lógica de adicionar
         tarefa=input('Qual tarefa deseja adicionar: ')
         tarefas.append(tarefa)
@@ -22,14 +23,31 @@ while True:
         # Aqui vamos escrever a lógica de listar
             if len(tarefas) == 0:
                 os.system('cls')
-                print('Você não possui tarefas')
+                print('Você não possui tarefas')   
             else:
-                print("Suas tarefas são...")
-                print(item)
-            for item in tarefas:
-                print(item)
+                print('Suas tarefas são...')
+                for item, topico in enumerate(tarefas):
+                   print(item, topico)
     elif opcao == '3':
-        print("Saindo do programa...")
+        if len(tarefas) == 0:
+            print('Você não possui tarefas para apagar')
+        else:
+            print('\n--- LISTA PARA APAGAR ---')
+            for indice, topico in enumerate(tarefas):
+                print(indice, topico)
+            try:
+                apagar=int(input('Qual tarefa deseja apagar: '))
+                del tarefas[apagar]
+                print('Tarefa removida com sucesso!')
+            except ValueError:
+                print('Por favor, digite um número inteiro.')
+            except IndexError:
+                print('Índice não existe na lista.')
+            except Exception:
+                print('Erro desconhecido')
+
+    elif opcao == '4':
+        print('Saindo do programa...')
         break
     else:
-        print("Opção inválida!")
+        print('Opção inválida!')
