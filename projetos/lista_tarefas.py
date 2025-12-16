@@ -2,10 +2,11 @@
 # Autor: [Seu Nome]
 # Data: 16/12/2025
 import os
+import time
 tarefas = []
 
 while True:
-    
+    os.system('cls')
     print('\n--- MENU ---')
     print('1. Adicionar Tarefa')
     print('2. Listar Tarefas')
@@ -18,6 +19,8 @@ while True:
         print('Você escolheu adicionar...')
         # Aqui vamos escrever a lógica de adicionar
         tarefa=input('Qual tarefa deseja adicionar: ')
+        print("Tarefa adicionada!")
+        time.sleep(2)
         tarefas.append(tarefa)
     elif opcao == '2':
         # Aqui vamos escrever a lógica de listar
@@ -27,14 +30,14 @@ while True:
             else:
                 print('Suas tarefas são...')
                 for item, topico in enumerate(tarefas):
-                   print(item, topico)
+                   print(f'[{item}] - {topico}')
     elif opcao == '3':
         if len(tarefas) == 0:
             print('Você não possui tarefas para apagar')
         else:
             print('\n--- LISTA PARA APAGAR ---')
             for indice, topico in enumerate(tarefas):
-                print(indice, topico)
+                print(f'[{indice}] - {topico}')
             try:
                 apagar=int(input('Qual tarefa deseja apagar: '))
                 del tarefas[apagar]
@@ -51,3 +54,4 @@ while True:
         break
     else:
         print('Opção inválida!')
+    input("\nPressione ENTER para continuar...")
