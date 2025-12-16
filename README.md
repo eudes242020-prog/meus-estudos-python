@@ -14,4 +14,4 @@ Este repositório serve para armazenar meu progresso, exercícios e anotações 
 
 ---
 *Foco: Backend Development*
-Vai ser uma longa jornada mas a cada dia é uma vitoria diferente.
+> "Vai ser uma longa jornada, mas a cada dia é uma vitória diferente."
