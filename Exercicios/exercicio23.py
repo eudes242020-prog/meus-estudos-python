@@ -36,6 +36,6 @@ while True:
         print('Até mais')
         break
     else:
-        print('Por favor, escolha i, a ou l.')
+        print('Por favor, escolha i, l, ou s.')
 
 
