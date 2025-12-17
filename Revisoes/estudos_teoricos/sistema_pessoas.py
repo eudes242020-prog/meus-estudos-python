@@ -25,14 +25,24 @@ pessoas = [
 ]
 while True:
     limpar_tela()
-
     mostrar_lista(pessoas)
-
-    nova_pessoa = cadastrar_pessoas()
-
-    pessoas.append(nova_pessoa)
-    print("✅ Cadastro realizado com sucesso!")
-    time.sleep(1)
-    sair = input("\nDeseja fechar o programa? [s/n]: ")
-    if sair.lower() == 's':
+    
+    print("\n[1] Cadastrar nova pessoa")
+    print("[2] Sair do sistema")
+    
+    opcao = input("Escolha uma opção: ")
+    
+    if opcao == '1':
+        # Só chama o cadastro se a pessoa escolher 1
+        nova = cadastrar_pessoas()
+        pessoas.append(nova)
+        print("✅ Salvo!")
+        time.sleep(1)
+        
+    elif opcao == '2':
+        print("Saindo...")
         break
+        
+    else:
+        print("Opção inválida!")
+        time.sleep(1)
