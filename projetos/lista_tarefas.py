@@ -1,5 +1,5 @@
 # PROJETO: Lista de Tarefas Simples
-# Autor: [Seu Nome]
+# Autor: [Eudes]
 # Data: 16/12/2025
 import os
 import time
