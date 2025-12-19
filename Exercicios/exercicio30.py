@@ -1,44 +1,49 @@
+
 perguntas = [
     {
-        'Pergunta': 'Quanto é 2+2?',
-        'Opções': ['1', '3', '4', '5'],
-        'Resposta': '4',
+        'Pergunta': 'Qual é o resultado de 3 * "A"?',
+        'Opções': ['AAA', '3A', 'A3', 'Erro'],
+        'Resposta': 'AAA',
     },
     {
-        'Pergunta':'Quanto é 5*5?',
-        'Opções': ['25', '55', '10', '51'],
-        'Resposta': '25',
+        'Pergunta': 'Qual comando usamos para mostrar algo na tela?',
+        'Opções': ['input()', 'screen()', 'print()', 'echo()'],
+        'Resposta': 'print()',
     },
     {
-        'Pergunta':'Quanto é 10/2?',
-        'Opções': ['4', '5', '2', '1'],
-        'Resposta': '5',
+        'Pergunta': 'O que o comando int("5") faz?',
+        'Opções': ['Transforma em texto', 'Transforma em inteiro', 'Nada', 'Dá erro'],
+        'Resposta': 'Transforma em inteiro',
+    },
+    {
+        'Pergunta': 'Como se inicia uma lista vazia?',
+        'Opções': ['{}', '()', '[]', '<>'],
+        'Resposta': '[]',
+    },
+    {
+        'Pergunta': 'Qual símbolo usamos para comentários?',
+        'Opções': ['//', '#', '--', '/*'],
+        'Resposta': '#',
     }
 ]
-
+contador=0
 for pergunta in perguntas:
-    print('Pergunta:', pergunta['Pergunta'])
-    print()
-    
-    opcoes = pergunta['Opções']
-    for i, opcao in enumerate(opcoes):
-        print(f'{i}) {opcao}')
+    print(f'{pergunta["Pergunta"]}')
+    opcoes=pergunta['Opções']
+    for i, disponiveis in enumerate(opcoes):
+        print(f'{i} {disponiveis}')
+    try:
+        escolha=int(input('Qual opção é a correta: '))
+        if escolha >= 0 and escolha <len(opcoes):
 
-    
-    escolha = input('Escolha uma opção: ')
-    
-    
-    if escolha.isdigit():
-        indice = int(escolha)
-        
-       
-        resposta_do_usuario = opcoes[indice]
-
-        if resposta_do_usuario == pergunta['Resposta']:
-            print('✅ Acertou!')
+            if opcoes[escolha]==pergunta['Resposta']:
+                print('Você acertou!!')
+                contador+=1
+            else:
+                print('Errou!')
         else:
-            print('❌ Errou!')
-    else:
-        print('⚠️ Por favor, digite um número.')
-        
-    print() #
+            print('Opção inválida (número fora da lista)')
+
+    except ValueError:
+        print('precisa ser um numero inteiro')
+print(f'Você acertou {contador}')
