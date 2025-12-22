@@ -1,16 +1,26 @@
-#  Meus Estudos de Python
+# Meus Estudos em Python
 
-Este repositório serve para armazenar meu progresso, exercícios e anotações durante minha jornada de aprendizado em Python.
+Este repositório contém meus estudos iniciais em **Python**, com foco em **lógica de programação** e **backend**.
 
-##  O que tem aqui?
-- Exercícios de lógica de programação.
-- Projetos práticos (como Listas de Compras, Calculadora, etc).
-- Revisões de conceitos fundamentais.
+## Objetivo
+Construir uma base sólida em programação, entendendo bem conceitos como:
+- lógica
+- funções
+- listas
+- loops
+- controle de fluxo
 
-##  Tecnologias
-- Python 3
-- Git & GitHub
-- VS Code
+Sem pular etapas.
+
+## 📂 Estrutura do repositório
+- **exercicios/** → exercícios práticos para fixação
+- **revisoes/** → códigos refeitos para revisar conceitos
+- **projetos/** → pequenos projetos para aplicar o que aprendi
+
+## 🚀 Como executar
+Todos os arquivos são executados com:
+```bash
+python nome_do_arquivo.py
 
 ---
 *Foco: Backend Development*
