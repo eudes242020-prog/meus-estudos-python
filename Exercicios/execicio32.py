@@ -8,3 +8,8 @@ for pessoa in pessoas:
 print(f"Nome:{pessoas[0]['nome']}")
 print(f"Idade: {pessoas[0]['idade']}")
 print(f"Profissão: {pessoas[0]['profissão']}")
+
+
+
+        
+                
