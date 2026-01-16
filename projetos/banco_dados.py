@@ -1,3 +1,3 @@
 clientes = []
 produtos = []
-compras = []
+vendas = []

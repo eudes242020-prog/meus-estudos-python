@@ -1,4 +1,4 @@
-from banco_dados import produtos, clientes, compras
+from banco_dados import produtos, clientes, vendas
 from cadastro_clientes import cadastro_completo, cpf_cadastro
 from utils import pausa_e_limpar
 from produtos import ver_produtos
@@ -52,7 +52,7 @@ def registrar_compra():
         if quantidade is None:
             continue
         produto['estoque'] -= quantidade
-        compras.append({
+        vendas.append({
             'cliente': cliente['nome'],
             'cpf': cliente['cpf'],
             'produto': produto['nome'],
