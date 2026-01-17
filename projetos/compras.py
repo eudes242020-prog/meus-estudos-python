@@ -44,6 +44,8 @@ def registrar_compra():
     cliente = encontrar_cliente(cpf)
     if cliente is None:
         return
+    itens_compra=[]
+    total_compra = 0  # Inicializa o total
     while True:
         produto = selecionar_produto()
         if not produto:
@@ -52,14 +54,21 @@ def registrar_compra():
         if quantidade is None:
             continue
         produto['estoque'] -= quantidade
-        vendas.append({
-            'cliente': cliente['nome'],
-            'cpf': cliente['cpf'],
+        item = {
             'produto': produto['nome'],
             'quantidade': quantidade,
-            'preço unitario': produto['preço'],
-        })
-        print("Compra registrada com sucesso.")
+            'preço unitario': produto['preço']
+            }
+        itens_compra.append(item)
+        total_compra += quantidade * produto['preço'] 
         continuar = input("Deseja realizar outra compra? (sim/não): ").strip().lower()
         if continuar != 'sim':
             break
+    vendas.append({
+        'cliente': cliente['nome'],
+        'cpf': cliente['cpf'],
+        'itens': itens_compra,
+        'total': round(total_compra, 2)    
+        })
+    print("Compra registrada com sucesso.")
+    print(f"Total da compra: R${total_compra:.2f}")
