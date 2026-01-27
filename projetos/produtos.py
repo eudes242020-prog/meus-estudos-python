@@ -44,7 +44,7 @@ def ajuste_estoque(quantidade_estoque):
         estoque=quantidade_estoque
         try:
             pausa_e_limpar()
-            print('[1] Para adicionar no estoque\n[0] Para tira do estoque')
+            print('[1] Para adicionar no estoque\n[0] Para tirar do estoque')
             escolha=int(input('Escolha a opção desejada: '))
             if escolha==1:
                 qtd = int(input('Informe a quantidade que deseja adicionar: '))
@@ -64,25 +64,23 @@ def ajuste_estoque(quantidade_estoque):
         except ValueError:
             print('Digite apenas números inteiros.')
             continue
-def cadastro_produto():
-    nome=nome_produto()
-    preco=preco_produto()
-    id=codigo_produto()
-    quantidade=quantidade_estoque()
-    produto_encontrado = False
-    if None in (nome,preco,id,quantidade):
-        print('Erro de entrada!')
-        return None
-    for produto in produtos:
+def cadastro_produto(lista_produtos):
+    nome = nome_produto()
+    preco = preco_produto()
+    # Item de segurança: verifica se o item já está nas "prateleiras"
+    for produto in lista_produtos:
         if produto['nome'] == nome and produto['preço'] == preco:
-            ajuste=ajuste_estoque(produto['estoque'])
+            ajuste = ajuste_estoque(produto['estoque'])
             if ajuste is not None:
                 produto['estoque'] += ajuste
-            produto_encontrado = True
-            break
-    if not produto_encontrado:    
-        cadastro_novo={'id': id,'nome': nome, 'preço': preco, 'estoque':quantidade}
-        produtos.append(cadastro_novo)
+            # Retornamos None para o main saber: "já cuidei disso, não adicione nada novo"
+            return None 
+    # Se chegou aqui, é um item totalmente novo
+    id = codigo_produto()
+    quantidade = quantidade_estoque()
+    cadastro_novo = {'id': id, 'nome': nome, 'preço': preco, 'estoque': quantidade}
+    print(f"Produto {nome} cadastrado com sucesso!")
+    return cadastro_novo # Devolve a "peça" pronta para o main
 def ver_produtos():
     if not produtos:
         print("Nenhum produto cadastrado.")

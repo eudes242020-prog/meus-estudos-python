@@ -1,14 +1,17 @@
-from banco_dados import clientes, produtos
-from cadastro_clientes import cadastro_completo
-from produtos import cadastro_produto
-from cadastro_clientes import ver_clientes
-from produtos import ver_produtos
+from banco_dados import lista_para_exibir, produtos, vendas
+from produtos import cadastro_produto, ver_produtos 
+from cadastro_clientes import ver_clientes, cadastro_completo, salvar_dados, carregar_dados
 from compras import registrar_compra
 from utils import pausa_e_limpar
+from relatorios import listar_vendas, vendas_por_cliente, total_gasto_por_cliente
+
 menu_administrador = {
     1: "Cadastrar produto",
     2: "Ver produtos cadastrados",
     3: "Ver clientes cadastrados",
+    4: "Relatório de Vendas",
+    5: "Vendas por Cliente",
+    6: "Total Gasto por Cliente",
     0: "Voltar"
 }
 adm_cliente ={
@@ -16,7 +19,7 @@ adm_cliente ={
     2: "Cliente",
     0: "Sair"
     }
-menu_cliente={
+menu_cliente={  
     1: "Fazer cadastro",
     2: "Realizar compra",
     0: "Voltar"
@@ -41,6 +44,7 @@ def obter_escolha():
         print("Entrada inválida! Digite um número inteiro.")
         return None
 def executar_sistema():
+    clientes = carregar_dados()
     while True:
         primeiro_menu(adm_cliente)
         decisao = obter_escolha()
@@ -59,8 +63,19 @@ def executar_sistema():
                     cadastro_produto()
                 elif escolha_admin == 2:
                     ver_produtos()
+                    input('\nPressione ENTER para voltar...')
                 elif escolha_admin == 3:
-                    ver_clientes()
+                    ver_clientes(clientes)
+                    input('\nPressione ENTER para voltar...')
+                elif escolha_admin == 4:
+                    listar_vendas()
+                    input('\nPressione ENTER para voltar...')
+                elif escolha_admin == 5:
+                    vendas_por_cliente()
+                    input('\nPressione ENTER para voltar...')
+                elif escolha_admin == 6:
+                    total_gasto_por_cliente()
+                    input('\nPressione ENTER para voltar...')
                 pausa_e_limpar()
         elif decisao == 2:  # CLIENTE
             while True:
@@ -69,9 +84,12 @@ def executar_sistema():
                 if escolha_cliente == 0:
                     break
                 elif escolha_cliente == 1:
-                    cadastro_completo()
+                    novo = cadastro_completo(clientes)
+                    if novo is not None: 
+                        clientes.append(novo)
+                        salvar_dados(clientes)
                 elif escolha_cliente == 2:
-                    registrar_compra()
+                    registrar_compra(clientes, produtos, vendas)
                 pausa_e_limpar()
         else:
             print('Opção invalida')

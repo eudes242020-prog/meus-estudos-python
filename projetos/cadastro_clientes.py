@@ -1,5 +1,4 @@
-import re
-from banco_dados import clientes
+import json
 from utils import pausa_e_limpar
 def nome_cadastro():
     while True:
@@ -16,19 +15,20 @@ def cpf_cadastro():
         for numero in cpf_sujo:
             if numero.isdigit():
                 cpf_limpo += numero
-        if len(cpf_limpo) != 11:
-            print('CPF deve conter 11 números.')
+        cpf_limpo = cpf_limpo[:11] 
+        if len(cpf_limpo) < 11:
+            print('CPF incompleto.')
             continue
-        cpf_validado = validar_cpf(cpf_limpo)
-        if cpf_validado:
-            return cpf_validado
+        sucesso = validar_cpf(cpf_limpo)
+        if sucesso:
+            return cpf_limpo
         print('CPF inválido. Tente novamente.')
 def validar_cpf(cpf):
     primeiro_caractere = cpf[0]
     sequencia_repetida = primeiro_caractere * len(cpf)
     if cpf == sequencia_repetida:
         print('Você digitou dados iguais, CPF invalido!')
-        return None
+        return False
     nove_digitos=cpf[:9] 
     contador_regressivo_1 = 10
     resultado_digito_1 = 0
@@ -49,32 +49,51 @@ def validar_cpf(cpf):
         digit_2 = 0
     cpf_calculado = f'{nove_digitos}{digit_1}{digit_2}'
     if cpf == cpf_calculado:
-        return cpf
-    return None
+        return True
+    return False
 def email_cadastro():
     while True:
         pausa_e_limpar()
         email=input('Informe o email: ').strip().lower()
-        padrao = r'^[a-zA-Z0-9._-]+@[a-zA-Z]+\.[a-zA-Z]{2,}$'
-        if re.match(padrao, email):
+        if email.count('@') != 1:
+            print('Email inválido.')
+            continue
+        partes = email.split('@')
+        if "." in partes[1] and partes[0]:
             return email
         print('Email inválido.')
-    
-def cadastro_completo():
+def cadastro_completo(lista_atual):
     nome=nome_cadastro()
     cpf = cpf_cadastro()
-    cpf = validar_cpf(cpf)
+    for cliente in lista_atual:
+        if cliente['cpf'] == cpf:
+            print("Erro: CPF já cadastrado!")
+            return
     email=email_cadastro()
     if None in (nome,cpf,email):
         print("Todos os dados devem ser preenchidos corretamente.")
         return
     novo_cadastro={'nome':nome, 'cpf': cpf, 'email': email}
-    clientes.append(novo_cadastro)
     print("Cadastro realizado com sucesso!")
-def ver_clientes():
-    if not clientes:
+    return novo_cadastro
+def ver_clientes(lista_para_exibir):
+    if not lista_para_exibir:
         print("Nenhum cliente cadastrado.")
     else:
         print("\n--- Clientes Cadastrados ---")
-        for cliente in clientes:
+        for cliente in lista_para_exibir:
             print(f"Nome: {cliente['nome']} - CPF: {cliente['cpf']} - Email: {cliente['email']}")
+def salvar_dados(lista_clientes):
+    try:
+        with open("config.json", "w", encoding='utf-8') as arquivo:
+            json.dump(lista_clientes, arquivo, indent=4, ensure_ascii=False)
+        print("Dados salvos com sucesso!")
+    except Exception as e:
+        print(f"Erro ao salvar dados: {e}")
+    return lista_clientes
+def carregar_dados():
+    try:
+        with open ("config.json", 'r',) as arquivo:
+            return json.load(arquivo)
+    except:
+        return []
