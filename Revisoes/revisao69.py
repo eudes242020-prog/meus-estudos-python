@@ -1,3 +1,4 @@
+lista = ['Estudar', 'Trabalhar', 'Treinar', 'Descansar']
 def lista_usa(lista):
     for i,item in enumerate(lista, start=1):
         print(f'{i} {item}')
@@ -8,5 +9,5 @@ def lista_usa(lista):
         return 'Opção inválida'
     except ValueError:
         return 'Apenas números inteiros permitidos!!'
-afazeres = lista_usa(['Estudar', 'Trabalhar', 'Treinar', 'Descansar'])
+afazeres = lista_usa(lista)
 print(afazeres)
