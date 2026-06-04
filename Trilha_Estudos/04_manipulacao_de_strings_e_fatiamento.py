@@ -1,0 +1,18 @@
+# TÓPICO: 04 Manipulacao De Strings E Fatiamento
+
+# ==============================================================================
+# ORIGINAL: Revisoes/revisao27.py
+# ==============================================================================
+
+'''
+Fatiamente de strings
+ 012345678
+ Olá mundo
+-987954321
+Fatiamento [i:f:p] [::]
+Obs.: a função len retorna a qtd
+de caracteres da str
+'''
+variavel = 'Olá mundo'
+print(len(variavel))
+
