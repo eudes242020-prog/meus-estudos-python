@@ -6,5 +6,9 @@
     {
         "tarefa": "varrer casa",
         "status": true
+    },
+    {
+        "tarefa": "volei",
+        "status": false
     }
 ]

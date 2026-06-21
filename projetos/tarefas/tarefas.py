@@ -19,15 +19,7 @@ def entrada_usuario():
             continue    
         return tarefa
 def adicionar_tarefa(lista, tarefa):
-    lista.append(Tarefa(tarefa))
-
-def remover_tarefa (lista, remocao):  
-    for item in lista:
-        if item.tarefa == remocao:
-            lista.remove(item)
-            break
-    else:
-        return "Não existe essa tarefa"    
+    lista.append(Tarefa(tarefa))   
 def concluir_tarefa(lista, numero):
     try:
         variavel = lista[numero-1]
@@ -44,3 +36,11 @@ def entrada_numero():
         except ValueError:
             print('Precisa ser um número inteiro')
             continue
+def remover_tarefa(lista, numero):
+    try:
+        variavel=lista[numero-1]
+        lista.remove(variavel)
+    except ValueError:
+        return  'Precisa ser um número'
+    except IndexError:
+        return 'Não existe essa tarefa' 

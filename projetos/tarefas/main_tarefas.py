@@ -17,15 +17,16 @@ while True:
         adicionar_tarefa(atividade, valido)
         salvar_tarefas(atividade)
     elif opcao== '2':
-        valido=entrada_usuario()
-        remocao=remover_tarefa(atividade, valido)
-        if remocao is not None:
-            print(remocao)
+        ver_tarefas(atividade)
+        valido_num=entrada_numero()
+        remover=remover_tarefa(atividade,valido_num)
+        if remover is not None:
+            print(remover)
         salvar_tarefas(atividade)
     elif opcao == '3':
         ver_tarefas(atividade)
-        valido=entrada_numero()
-        concluido=concluir_tarefa(atividade, valido)
+        valido_num=entrada_numero()
+        concluido=concluir_tarefa(atividade, valido_num)
         if concluido is not None:
             print(concluido)
         salvar_tarefas(atividade)
