@@ -1,15 +1,22 @@
-class Tarefa():
+class Tarefa:
     def __init__(self, tarefa, status=False):
         self.tarefa=tarefa
         self.status=status
     def marcar_concluida(self):
         self.status=True
+    def __str__(self):
+        if self.status:
+            return f'{self.tarefa} está concluida'
+        return f'{self.tarefa} não está concluida'
 def entrada_usuario():
     while True:
-        tarefa=input('Digite uma terefa: ').strip()
-        if tarefa.isdigit() or not tarefa:
+        tarefa=input('Digite uma tarefa: ').strip()
+        if tarefa.isdigit():
             print('Tarefa não pode ser apenas números')
             continue
+        if not tarefa:
+            print('Algo precisa ser digitado')
+            continue    
         return tarefa
 def adicionar_tarefa(lista, tarefa):
     lista.append(Tarefa(tarefa))
@@ -21,18 +28,19 @@ def remover_tarefa (lista, remocao):
             break
     else:
         return "Não existe essa tarefa"    
-def marcar_concluida(lista, tarefa):
-    for item in lista:
-        if item.tarefa == tarefa:
-            item.marcar_concluida()
-            break
-    else:
+def concluir_tarefa(lista, numero):
+    try:
+        variavel = lista[numero-1]
+        variavel.marcar_concluida()
+    except IndexError:
         return 'Não existe essa tarefa'        
-# def pegar_nome_tarefa():
-#     tarefa=input('Informe uma tarefa: ')
-#     return tarefa
-# def validar_nome_tarefa(tarefa):
-#     if tarefa and len(tarefa.strip()) >=2 and not tarefa.isdigit() :
-#         return tarefa
-#     else:
-#         return None
+def entrada_numero():
+    while True:
+        try:
+            numero=int(input('Número da tarefa: '))
+            if numero > 0:
+                return numero
+            print('Número precisa ser maior que zero ')
+        except ValueError:
+            print('Precisa ser um número inteiro')
+            continue

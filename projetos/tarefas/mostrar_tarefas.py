@@ -1,6 +1,3 @@
 def ver_tarefas(lista):
-    for item in lista:
-        if item.status:
-            print(f"Tarefa: {item.tarefa} está concluida")
-        else:
-            print(f"Tarefa: {item.tarefa} está pendente")
+    for num,item in enumerate(lista,1):
+        print(f'{num} {item}')

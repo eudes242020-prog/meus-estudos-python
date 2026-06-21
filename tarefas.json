@@ -1,0 +1,10 @@
+[
+    {
+        "tarefa": "jogar bola",
+        "status": true
+    },
+    {
+        "tarefa": "varrer casa",
+        "status": true
+    }
+]
