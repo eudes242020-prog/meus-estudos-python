@@ -3,6 +3,14 @@ __pycache__/
 *.pyc
 *.pyo
 .env
+.vscode/
+
+# Dados de execução (não são código)
+*.db
+*.sqlite
+*.sqlite3
+tarefas.json
+
 Exercicios_backup/
 Revisoes_backup/
 organizador.py

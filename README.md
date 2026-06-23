@@ -5,8 +5,9 @@ Repositório de aprendizado em **Python** com foco em **desenvolvimento backend*
 ## Stack e Conceitos
 
 ![Python](https://img.shields.io/badge/Python-3.13-blue?logo=python&logoColor=white)
-![OOP](https://img.shields.io/badge/OOP-Em%20andamento-orange)
-![JSON](https://img.shields.io/badge/Persistência-JSON-yellow)
+![OOP](https://img.shields.io/badge/POO-Concluído-brightgreen)
+![SQLite](https://img.shields.io/badge/SQLite-CRUD%20completo-brightgreen?logo=sqlite&logoColor=white)
+![SQL](https://img.shields.io/badge/SQL-Queries%20parametrizadas-blue)
 ![CLI](https://img.shields.io/badge/Interface-CLI-lightgrey)
 
 **Fundamentos cobertos:**
@@ -20,27 +21,31 @@ Repositório de aprendizado em **Python** com foco em **desenvolvimento backend*
 - Tratamento de exceções (`try/except` múltiplo, erros específicos)
 - Decoradores
 - Programação funcional (map, filter, reduce)
-- **Orientação a Objetos:** classes, `__init__`, atributos, métodos de instância, serialização
+- **Orientação a Objetos:** classes, `__init__`, atributos, métodos de instância, `__str__`, métodos que alteram estado
+- **Banco de dados SQLite:** `CREATE TABLE`, CRUD completo (`INSERT`/`SELECT`/`UPDATE`/`DELETE`), seleção por `id` com `WHERE`, queries parametrizadas (`?`) como defesa contra SQL injection, `fetchall`, `rowcount`
 
 ## Projetos
 
-### Sistema de Controle de Tarefas (CLI + POO + Persistência)
+### Sistema de Controle de Tarefas (CLI + POO + SQLite)
 
-Projeto construído do zero ao longo de múltiplas sessões práticas. Evoluiu de funções simples para uma arquitetura orientada a objetos com persistência real em disco.
+Projeto construído do zero ao longo de múltiplas sessões práticas. Evoluiu de funções simples para uma arquitetura orientada a objetos e, em seguida, migrou a persistência de JSON para um banco de dados SQLite com **CRUD completo**.
 
 ```
-sistema_tarefas/
-├── tarefas.py          # Classe Tarefa + operações (adicionar, remover, marcar)
-├── dados_tarefas.py    # Persistência JSON: serialização objeto→dict e dict→objeto
-├── mostrar_tarefas.py  # Exibição formatada das tarefas
+projetos/tarefas/
+├── tarefas.py          # Classe Tarefa + operações de CRUD (INSERT/UPDATE/DELETE)
+├── dados_tarefas.py    # Camada de dados SQLite: CREATE TABLE, INSERT, SELECT
+├── mostrar_tarefas.py  # Exibição formatada das tarefas (via __str__)
 └── main_tarefas.py     # Menu CLI com validação de input
 ```
 
 **Destaques técnicos:**
-- Classe `Tarefa` com atributos `tarefa` e `status`, método `marcar_concluida(self)`
-- Serialização/deserialização manual: `objeto → dict` para salvar, `dict → Tarefa` ao carregar
-- Tratamento de múltiplos erros de arquivo: `FileNotFoundError` e `json.JSONDecodeError`
-- Validação de input com princípio DRY: funções separadas para coletar, validar e orquestrar
+- Classe `Tarefa` com `__init__`, `__str__` e método `marcar_concluida(self)` que altera estado
+- **CRUD completo em SQLite por `id`:** criar (`INSERT`), listar (`SELECT` + `fetchall`), marcar (`UPDATE`) e remover (`DELETE`), cada operação mirando a linha certa com `WHERE id = ?`
+- **Queries parametrizadas (`?`)** em vez de concatenação de strings — defesa contra SQL injection
+- `CREATE TABLE IF NOT EXISTS` para setup idempotente (re-rodável sem quebrar)
+- Tratamento de falha silenciosa: usa `cursor.rowcount` para detectar operação sobre `id` inexistente (que não lança exceção em SQL)
+- Decisão de arquitetura consciente: **banco como fonte única da verdade** (toda leitura re-consulta o SQLite, sem cópia paralela em memória)
+- Ponte linha↔objeto: tupla `(id, tarefa, status)` reconstruída em `Tarefa` ao carregar
 - Arquitetura modular com responsabilidades bem definidas por arquivo
 
 ### Sistema de Gestão (CLI)
@@ -68,7 +73,7 @@ meus-estudos-python/
 ├── Exercicios_backup/       # 57+ exercícios de lógica e estruturas de dados
 ├── Revisoes_backup/         # Revisões e estudos teóricos
 └── projetos/
-    ├── sistema_tarefas/     # Projeto POO com persistência JSON
+    ├── tarefas/             # Projeto POO com CRUD completo em SQLite
     └── sistema_gestao/      # Sistema CLI com múltiplos módulos
 ```
 
@@ -82,7 +87,7 @@ git clone https://github.com/eudes242020/meus-estudos-python.git
 cd meus-estudos-python
 
 # Sistema de Tarefas
-cd projetos/sistema_tarefas
+cd projetos/tarefas
 python main_tarefas.py
 
 # Sistema de Gestão
@@ -99,9 +104,10 @@ python main.py
 | Funções, módulos e escopo | ✅ Concluído |
 | Comprehensions, geradores, decoradores | ✅ Concluído |
 | Programação funcional | ✅ Concluído |
-| Orientação a Objetos (classes, métodos, atributos) | 🔄 Em andamento |
-| Banco de dados (SQLite → SQL) | ⏳ Próximo |
-| APIs REST (Flask / FastAPI) | ⏳ Planejado |
+| Orientação a Objetos (classes, métodos, atributos, `__str__`) | ✅ Concluído |
+| Banco de dados SQLite (CRUD completo por `id`, queries parametrizadas) | ✅ Concluído |
+| APIs REST (Flask / FastAPI) | ⏳ Próximo |
+| Testes automatizados | ⏳ Planejado |
 
 ---
 
