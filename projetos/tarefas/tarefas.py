@@ -21,7 +21,7 @@ def entrada_usuario():
             continue    
         return tarefa
 def adicionar_tarefa(tarefa):
-    novo=Tarefa(tarefa)
+    novo=Tarefa(None,tarefa)
     return novo
 def concluir_tarefa(numero):
         conexao = sqlite3.connect("tarefas.db")

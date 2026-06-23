@@ -9,7 +9,7 @@ def salvar_tarefas(tarefa):
     tarefa TEXT,
     status INTEGER
     ) """)
-    item.execute("INSERT INTO tarefas (id, tarefa, status) VALUES (? ,?, ?)", (tarefa.id ,tarefa.tarefa,tarefa.status))
+    item.execute("INSERT INTO tarefas (tarefa, status) VALUES (?, ?)", (tarefa.tarefa,tarefa.status))
     conexao.commit()
 def carregar_tarefas():
     conexao = sqlite3.connect("tarefas.db")
