@@ -8,6 +8,8 @@ Repositório de aprendizado em **Python** com foco em **desenvolvimento backend*
 ![OOP](https://img.shields.io/badge/POO-Concluído-brightgreen)
 ![SQLite](https://img.shields.io/badge/SQLite-CRUD%20completo-brightgreen?logo=sqlite&logoColor=white)
 ![SQL](https://img.shields.io/badge/SQL-Queries%20parametrizadas-blue)
+![Flask](https://img.shields.io/badge/Flask-API%20REST%20(GET%2FPOST)-brightgreen?logo=flask&logoColor=white)
+![REST](https://img.shields.io/badge/API-REST%20%2B%20JSON-blue)
 ![CLI](https://img.shields.io/badge/Interface-CLI-lightgrey)
 
 **Fundamentos cobertos:**
@@ -23,15 +25,18 @@ Repositório de aprendizado em **Python** com foco em **desenvolvimento backend*
 - Programação funcional (map, filter, reduce)
 - **Orientação a Objetos:** classes, `__init__`, atributos, métodos de instância, `__str__`, métodos que alteram estado
 - **Banco de dados SQLite:** `CREATE TABLE`, CRUD completo (`INSERT`/`SELECT`/`UPDATE`/`DELETE`), seleção por `id` com `WHERE`, queries parametrizadas (`?`) como defesa contra SQL injection, `fetchall`, `rowcount`
+- **APIs REST com Flask:** servidor HTTP, rotas (`@app.route`), métodos GET e POST, leitura do corpo da requisição (`request.get_json()`), serialização de objetos para JSON (`jsonify`), setup de banco no arranque da aplicação
+- **Gerenciamento de dependências:** instalação de pacotes externos (`pip install`), ambiente e ferramentas de teste de API (Thunder Client)
 
 ## Projetos
 
-### Sistema de Controle de Tarefas (CLI + POO + SQLite)
+### Sistema de Controle de Tarefas (API REST + POO + SQLite)
 
-Projeto construído do zero ao longo de múltiplas sessões práticas. Evoluiu de funções simples para uma arquitetura orientada a objetos e, em seguida, migrou a persistência de JSON para um banco de dados SQLite com **CRUD completo**.
+Projeto construído do zero ao longo de múltiplas sessões práticas. Evoluiu de funções simples para uma arquitetura orientada a objetos, migrou a persistência de JSON para um banco de dados SQLite com **CRUD completo** e, na fase atual, ganhou uma **API REST em Flask** que expõe o mesmo CRUD pela rede — reutilizando as funções de dados já existentes (sem reescrever lógica).
 
 ```
 projetos/tarefas/
+├── app.py              # API REST (Flask): rotas GET/POST + serialização para JSON
 ├── tarefas.py          # Classe Tarefa + operações de CRUD (INSERT/UPDATE/DELETE)
 ├── dados_tarefas.py    # Camada de dados SQLite: CREATE TABLE, INSERT, SELECT
 ├── mostrar_tarefas.py  # Exibição formatada das tarefas (via __str__)
@@ -39,10 +44,14 @@ projetos/tarefas/
 ```
 
 **Destaques técnicos:**
+- **API REST com Flask:** rota `GET /tarefas` (lista em JSON) e `POST /tarefas` (cria a partir do corpo da requisição), plugadas direto no CRUD SQLite já existente
+- Serialização objeto → JSON: função `transporte_api` converte a lista de objetos `Tarefa` em lista de dicts antes do `jsonify` (a web só fala tipos básicos)
+- Leitura do payload da requisição com `request.get_json()`, substituindo o `input()` do CLI
+- Setup do banco no arranque da aplicação (`fazer_tabela()` chamada uma vez antes do `app.run`) com `CREATE TABLE IF NOT EXISTS` idempotente
+- **Reuso real (DRY):** a API não duplica regra de negócio — chama `carregar_tarefas`, `adicionar_tarefa` e `salvar_tarefas`, as mesmas funções do CLI
 - Classe `Tarefa` com `__init__`, `__str__` e método `marcar_concluida(self)` que altera estado
 - **CRUD completo em SQLite por `id`:** criar (`INSERT`), listar (`SELECT` + `fetchall`), marcar (`UPDATE`) e remover (`DELETE`), cada operação mirando a linha certa com `WHERE id = ?`
 - **Queries parametrizadas (`?`)** em vez de concatenação de strings — defesa contra SQL injection
-- `CREATE TABLE IF NOT EXISTS` para setup idempotente (re-rodável sem quebrar)
 - Tratamento de falha silenciosa: usa `cursor.rowcount` para detectar operação sobre `id` inexistente (que não lança exceção em SQL)
 - Decisão de arquitetura consciente: **banco como fonte única da verdade** (toda leitura re-consulta o SQLite, sem cópia paralela em memória)
 - Ponte linha↔objeto: tupla `(id, tarefa, status)` reconstruída em `Tarefa` ao carregar
@@ -73,7 +82,7 @@ meus-estudos-python/
 ├── Exercicios_backup/       # 57+ exercícios de lógica e estruturas de dados
 ├── Revisoes_backup/         # Revisões e estudos teóricos
 └── projetos/
-    ├── tarefas/             # Projeto POO com CRUD completo em SQLite
+    ├── tarefas/             # Projeto POO + CRUD SQLite + API REST (Flask)
     └── sistema_gestao/      # Sistema CLI com múltiplos módulos
 ```
 
@@ -86,9 +95,17 @@ meus-estudos-python/
 git clone https://github.com/eudes242020/meus-estudos-python.git
 cd meus-estudos-python
 
-# Sistema de Tarefas
+# Sistema de Tarefas (CLI)
 cd projetos/tarefas
 python main_tarefas.py
+
+# API REST do Sistema de Tarefas (Flask)
+cd projetos/tarefas
+pip install -r requirements.txt
+python app.py
+# Servidor em http://127.0.0.1:5000
+#   GET  /tarefas        -> lista as tarefas em JSON
+#   POST /tarefas        -> cria tarefa; corpo JSON: {"tarefa": "estudar API"}
 
 # Sistema de Gestão
 cd projetos/sistema_gestao
@@ -106,7 +123,8 @@ python main.py
 | Programação funcional | ✅ Concluído |
 | Orientação a Objetos (classes, métodos, atributos, `__str__`) | ✅ Concluído |
 | Banco de dados SQLite (CRUD completo por `id`, queries parametrizadas) | ✅ Concluído |
-| APIs REST (Flask / FastAPI) | ⏳ Próximo |
+| APIs REST com Flask (rotas GET/POST plugadas no CRUD SQLite) | 🚧 Em andamento |
+| API REST — completar U/D (`PUT`/`PATCH`/`DELETE` por `id`) e tratamento de erros HTTP | ⏳ Próximo |
 | Testes automatizados | ⏳ Planejado |
 
 ---
