@@ -8,16 +8,25 @@ def listar_tarefas():
     return jsonify(transporte_api(carregar_tarefas()))
 @app.route("/tarefas", methods=["POST"])
 def adicionar():
-    dados=request.get_json()
-    texto=dados["tarefa"]
-    salvar_tarefas(adicionar_tarefa(texto))
-    return jsonify({"mensagem": "tarefa criada"})
+    try:
+        dados=request.get_json()
+        texto=dados["tarefa"]
+        salvar_tarefas(adicionar_tarefa(texto))
+        return jsonify({"mensagem": "tarefa criada"})
+    except KeyError:
+        return "Tarefa precisa ser preenchida", 400
 @app.route("/tarefas/<int:id>", methods=['PUT'])
-def retorno_id(id):
-    return jsonify(concluir_tarefa(id))
+def marcar(id):
+    item=concluir_tarefa(id)
+    if item == 'Não existe esse id':
+        return "Esse ID não existe no banco", 404
+    return jsonify(item)
 @app.route("/tarefas/<int:id>", methods=['DELETE'])
 def tirar_tarefa(id):
-    return jsonify(remover_tarefa(id))
+    remover=remover_tarefa(id)
+    if remover == 'Não existe esse id':
+        return "Esse ID não existe no banco", 404
+    return jsonify(remover)
 def transporte_api(tarefas):
     lista=[]
     for item in tarefas:
