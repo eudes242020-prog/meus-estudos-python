@@ -31,6 +31,7 @@ def concluir_tarefa(numero):
         verificar=item.rowcount
         if verificar==0:
             return 'Não existe esse id'
+        return 'Tarefa feita!'
 def entrada_numero():
     while True:
         try:
@@ -49,3 +50,4 @@ def remover_tarefa(numero):
         verificar=item.rowcount
         if verificar==0:
             return 'Não existe esse id'
+        return "Tarefa removida"

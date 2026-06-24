@@ -1,7 +1,7 @@
 import sqlite3
 from flask import Flask, jsonify, request
 from dados_tarefas import carregar_tarefas, salvar_tarefas
-from tarefas import adicionar_tarefa
+from tarefas import adicionar_tarefa, concluir_tarefa,remover_tarefa
 app=Flask(__name__)
 @app.route("/tarefas")
 def listar_tarefas():
@@ -12,6 +12,12 @@ def adicionar():
     texto=dados["tarefa"]
     salvar_tarefas(adicionar_tarefa(texto))
     return jsonify({"mensagem": "tarefa criada"})
+@app.route("/tarefas/<int:id>", methods=['PUT'])
+def retorno_id(id):
+    return jsonify(concluir_tarefa(id))
+@app.route("/tarefas/<int:id>", methods=['DELETE'])
+def tirar_tarefa(id):
+    return jsonify(remover_tarefa(id))
 def transporte_api(tarefas):
     lista=[]
     for item in tarefas:
