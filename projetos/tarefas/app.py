@@ -1,7 +1,7 @@
 import sqlite3
 from flask import Flask, jsonify, request
-from dados_tarefas import carregar_tarefas, salvar_tarefas
-from tarefas import adicionar_tarefa, concluir_tarefa,remover_tarefa
+from dados_tarefas import carregar_tarefas, salvar_tarefas, conexao_api, concluir_tarefa,remover_tarefa
+from tarefas import adicionar_tarefa
 app=Flask(__name__)
 @app.route("/tarefas")
 def listar_tarefas():
@@ -33,10 +33,10 @@ def transporte_api(tarefas):
         tarefa={"id" : item.id, "tarefa" : item.tarefa, "status": item.status}
         lista.append(tarefa)
     return lista
-def fazer_tabela():
-    criar=sqlite3.connect('tarefas.db')
-    criar.execute("CREATE TABLE IF NOT EXISTS tarefas(id INTEGER PRIMARY KEY, tarefa TEXT, status INTEGER)")
-    criar.commit()
+def fazer_tabela(conexao):
+    conexao.execute("CREATE TABLE IF NOT EXISTS tarefas(id INTEGER PRIMARY KEY, tarefa TEXT, status INTEGER)")
+    conexao.commit()
+
 if __name__== "__main__":
-    fazer_tabela()
+    fazer_tabela(conexao_api())
     app.run(debug=True)

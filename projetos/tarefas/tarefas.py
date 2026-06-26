@@ -1,4 +1,3 @@
-import sqlite3
 class Tarefa:
     def __init__(self,id ,tarefa, status=False):
         self.id=id
@@ -23,15 +22,6 @@ def entrada_usuario():
 def adicionar_tarefa(tarefa):
     novo=Tarefa(None,tarefa)
     return novo
-def concluir_tarefa(numero):
-        conexao = sqlite3.connect("tarefas.db")
-        item = conexao.cursor()
-        item.execute("UPDATE tarefas SET status = ? WHERE id = ?", (True,numero))
-        conexao.commit()
-        verificar=item.rowcount
-        if verificar==0:
-            return 'Não existe esse id'
-        return 'Tarefa feita!'
 def entrada_numero():
     while True:
         try:
@@ -42,12 +32,3 @@ def entrada_numero():
         except ValueError:
             print('Precisa ser um número inteiro')
             continue
-def remover_tarefa(numero):
-        conexao = sqlite3.connect("tarefas.db")
-        item = conexao.cursor()
-        item.execute("DELETE FROM tarefas WHERE id = ?", (numero,))
-        conexao.commit()
-        verificar=item.rowcount
-        if verificar==0:
-            return 'Não existe esse id'
-        return "Tarefa removida"
