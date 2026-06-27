@@ -19,9 +19,6 @@ def entrada_usuario():
             print('Algo precisa ser digitado')
             continue    
         return tarefa
-def adicionar_tarefa(tarefa):
-    novo=Tarefa(None,tarefa)
-    return novo
 def entrada_numero():
     while True:
         try:

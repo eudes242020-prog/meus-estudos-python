@@ -1,6 +1,6 @@
 from dados_tarefas import carregar_tarefas, salvar_tarefas
 from mostrar_tarefas import ver_tarefas
-from tarefas import adicionar_tarefa, remover_tarefa, entrada_usuario,concluir_tarefa, entrada_numero
+from tarefas import remover_tarefa, entrada_usuario,concluir_tarefa, entrada_numero, Tarefa
 menu={1: "Cadastra Tarefa", 2: "Remover Tarefa", 3: "Marcar tarefa como concluida", 4: "Listar Tarefas", 0: "Sair"}
 def opcoes_menu(menu):
     for chave,opcao in menu.items():
@@ -13,8 +13,7 @@ while True:
         break
     elif opcao == '1':
         valido=entrada_usuario()
-        novo=adicionar_tarefa(valido)
-        salvar_tarefas(novo)
+        salvar_tarefas(Tarefa(None,valido))
     elif opcao== '2':
         ver_tarefas(carregar_tarefas())
         valido_num=entrada_numero()

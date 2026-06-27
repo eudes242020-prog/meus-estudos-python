@@ -1,7 +1,7 @@
 import sqlite3
 from flask import Flask, jsonify, request
 from dados_tarefas import carregar_tarefas, salvar_tarefas, conexao_api, concluir_tarefa,remover_tarefa
-from tarefas import adicionar_tarefa
+from tarefas import Tarefa
 app=Flask(__name__)
 @app.route("/tarefas")
 def listar_tarefas():
@@ -11,7 +11,7 @@ def adicionar():
     try:
         dados=request.get_json()
         texto=dados["tarefa"]
-        salvar_tarefas(adicionar_tarefa(texto))
+        salvar_tarefas(Tarefa(None,texto))
         return jsonify({"mensagem": "tarefa criada"})
     except KeyError:
         return "Tarefa precisa ser preenchida", 400
