@@ -48,7 +48,7 @@ projetos/tarefas/
 - Serialização objeto → JSON: função `transporte_api` converte a lista de objetos `Tarefa` em lista de dicts antes do `jsonify` (a web só fala tipos básicos)
 - Leitura do payload da requisição com `request.get_json()`, substituindo o `input()` do CLI
 - Setup do banco no arranque da aplicação (`fazer_tabela()` chamada uma vez antes do `app.run`) com `CREATE TABLE IF NOT EXISTS` idempotente
-- **Reuso real (DRY):** a API não duplica regra de negócio — chama `carregar_tarefas`, `adicionar_tarefa` e `salvar_tarefas`, as mesmas funções do CLI
+- **Reuso real (DRY):** a API não duplica regra de negócio — chama `carregar_tarefas` e `salvar_tarefas`, as mesmas funções do CLI
 - Classe `Tarefa` com `__init__`, `__str__` e método `marcar_concluida(self)` que altera estado
 - **CRUD completo em SQLite por `id`:** criar (`INSERT`), listar (`SELECT` + `fetchall`), marcar (`UPDATE`) e remover (`DELETE`), cada operação mirando a linha certa com `WHERE id = ?`
 - **Queries parametrizadas (`?`)** em vez de concatenação de strings — defesa contra SQL injection
@@ -123,9 +123,8 @@ python main.py
 | Programação funcional | ✅ Concluído |
 | Orientação a Objetos (classes, métodos, atributos, `__str__`) | ✅ Concluído |
 | Banco de dados SQLite (CRUD completo por `id`, queries parametrizadas) | ✅ Concluído |
-| APIs REST com Flask (rotas GET/POST plugadas no CRUD SQLite) | 🚧 Em andamento |
-| API REST — completar U/D (`PUT`/`PATCH`/`DELETE` por `id`) e tratamento de erros HTTP | ⏳ Próximo |
-| Testes automatizados | ⏳ Planejado |
+| APIs REST com Flask (rotas GET/POST, PUT/DELETE por `id` com tratamento de erros HTTP) |✅ Concluído|
+| Testes automatizados - (rotas get/post - criar tarefa/remover/marcar e listar, erros tratados- pytest fixture arrumar banco)| ✅ Concluído |
 
 ---
 
