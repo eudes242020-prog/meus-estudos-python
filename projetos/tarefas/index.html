@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+
+
+
+
+<body>
+    <h1>
+        MINHAS TAREFAS
+    </h1>
+    <ul id="tarefas">
+
+    </ul>
+    
+    <script>
+        const listaUl=document.getElementById("tarefas");
+        fetch("http://127.0.0.1:5000/tarefas").then(response=>{ return response.json()}).then(tarefas => {for (tarefa of tarefas) {const li=document.createElement("li")
+        if (tarefa.status==0) {tarefa.status='não concluida'} 
+        else {tarefa.status= 'concluida'}
+        li.textContent = `${tarefa.id} ${tarefa.tarefa} ${tarefa.status}`;listaUl.appendChild(li)}})
+    </script>
+</body>
+
+</html>

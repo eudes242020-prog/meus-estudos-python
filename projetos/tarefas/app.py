@@ -1,8 +1,10 @@
 import sqlite3
+from flask_cors import CORS
 from flask import Flask, jsonify, request
 from dados_tarefas import carregar_tarefas, salvar_tarefas, conexao_api, concluir_tarefa,remover_tarefa
 from tarefas import Tarefa
 app=Flask(__name__)
+CORS(app)
 @app.route("/tarefas")
 def listar_tarefas():
     return jsonify(transporte_api(carregar_tarefas()))
