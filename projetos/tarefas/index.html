@@ -20,15 +20,16 @@
     </ul>
     
     <script>
-        carregarTarefas()
         function carregarTarefas() {const listaUl=document.getElementById("tarefas");
         fetch("http://127.0.0.1:5000/tarefas").then(response=>{ return response.json()}).then(tarefas => {listaUl.innerHTML = ""; for (tarefa of tarefas) {const li=document.createElement("li")
         if (tarefa.status==0) {tarefa.status='não concluida'} 
         else {tarefa.status= 'concluida'}
+        li.textContent = `${tarefa.id} ${tarefa.tarefa} ${tarefa.status}`;listaUl.appendChild(li)}})};
         carregarTarefas()
-        li.textContent = `${tarefa.id} ${tarefa.tarefa} ${tarefa.status}`;listaUl.appendChild(li)}})}
         document.getElementById('adicionar').addEventListener("click", function () {const entradaUl = document.getElementById("entrada").value; if (entradaUl=="") {return alert("Tarefa precisa ser preenchida")} 
-        else {fetch("http://127.0.0.1:5000/tarefas",{headers : {"Content-Type": "application/json"},body: JSON.stringify({"tarefa" : entradaUl}), method :"POST"}).then(carregarTarefas)}})
+        else if (isNaN(entradaUl)) {fetch("http://127.0.0.1:5000/tarefas",{headers : {"Content-Type": "application/json"},body: JSON.stringify({"tarefa" : entradaUl}), method :"POST"}).then(carregarTarefas)}
+        else {return alert("Tarefa não pode ser só números")}})
+        
     </script>
 </body>
 
