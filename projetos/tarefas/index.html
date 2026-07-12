@@ -31,7 +31,7 @@
         else {tarefa.status= 'concluida'}
         li.textContent = `${tarefa.id} ${tarefa.tarefa} ${tarefa.status}`;li.appendChild(botaoConcluir);li.appendChild(botaoDelete); listaUl.appendChild(li)}})};
         carregarTarefas()
-        document.getElementById('adicionar').addEventListener("click", function () {const entradaUl = document.getElementById("entrada").value; if (entradaUl=="") {return alert("Tarefa precisa ser preenchida")} 
+        document.getElementById('adicionar').addEventListener("click", function () {const entradaUl = document.getElementById("entrada").value; if (entradaUl.trim()=="") {return alert("Tarefa precisa ser preenchida")} 
         else if (isNaN(entradaUl)) {fetch("http://127.0.0.1:5000/tarefas",{headers : {"Content-Type": "application/json"},body: JSON.stringify({"tarefa" : entradaUl}), method :"POST"}).then(carregarTarefas)}
         else {return alert("Tarefa não pode ser só números")}})
         
