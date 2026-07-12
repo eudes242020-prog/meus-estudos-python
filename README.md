@@ -92,7 +92,7 @@ meus-estudos-python/
 
 ```bash
 # Clonar o repositório
-git clone https://github.com/eudes242020/meus-estudos-python.git
+git clone https://github.com/eudes242020-prog/meus-estudos-python.git
 cd meus-estudos-python
 
 # Sistema de Tarefas (CLI)
