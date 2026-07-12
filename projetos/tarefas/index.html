@@ -20,7 +20,9 @@
     
     <script>
         function carregarTarefas() {const listaUl=document.getElementById("tarefas");
-        fetch("http://127.0.0.1:5000/tarefas").then(response=>{ return response.json()}).then(tarefas => {listaUl.innerHTML = ""; for (let tarefa of tarefas) {const li=document.createElement("li"); 
+        fetch("http://127.0.0.1:5000/tarefas").then(response=>{ return response.json()}).then(tarefas => {if (tarefas.length== 0) {listaUl.innerHTML = "NÃO EXISTE NENHUMA TAREFA!"}
+        else{listaUl.innerHTML = ""};
+         for (let tarefa of tarefas) {const li=document.createElement("li"); 
         const botaoConcluir =document.createElement("button") ; 
         botaoConcluir.textContent = "CONCLUIR";
         botaoConcluir.addEventListener("click", function () {fetch(`http://127.0.0.1:5000/tarefas/${tarefa.id}`, {method :"PUT"}).then(carregarTarefas)});
