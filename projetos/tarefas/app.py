@@ -1,6 +1,6 @@
 import sqlite3
 from flask_cors import CORS
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 from dados_tarefas import carregar_tarefas, salvar_tarefas, conexao_api, concluir_tarefa,remover_tarefa
 from tarefas import Tarefa
 app=Flask(__name__)
@@ -29,6 +29,9 @@ def tirar_tarefa(id):
     if remover == 'Não existe esse id':
         return "Esse ID não existe no banco", 404
     return jsonify(remover)
+@app.route("/")
+def site():
+    return render_template("index.html")
 def transporte_api(tarefas):
     lista=[]
     for item in tarefas:
