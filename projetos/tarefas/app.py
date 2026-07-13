@@ -41,7 +41,6 @@ def transporte_api(tarefas):
 def fazer_tabela(conexao):
     conexao.execute("CREATE TABLE IF NOT EXISTS tarefas(id INTEGER PRIMARY KEY, tarefa TEXT, status INTEGER)")
     conexao.commit()
-gunicorn app:app
 if __name__== "__main__":
     fazer_tabela(conexao_api())
     app.run(debug=True)
