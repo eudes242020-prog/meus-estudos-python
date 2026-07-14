@@ -29,8 +29,8 @@
          const botaoDelete =document.createElement("button") ; 
         botaoDelete.textContent = "REMOVER";
         botaoDelete.addEventListener("click", function () {fetch(`/tarefas/${tarefa.id}`, {method :"DELETE"}).then(carregarTarefas)})
-        if (tarefa.status==0) {tarefa.status='não concluida'} 
-        else {tarefa.status= 'concluida'}
+        if (tarefa.status==0) {tarefa.status='não concluída'} 
+        else {tarefa.status= 'concluída'}
         li.textContent = `${tarefa.id} ${tarefa.tarefa} ${tarefa.status}`;li.appendChild(botaoConcluir);li.appendChild(botaoDelete); listaUl.appendChild(li)}})};
         carregarTarefas()
         document.getElementById('adicionar').addEventListener("click", function () {const entradaUl = document.getElementById("entrada").value; if (entradaUl.trim()=="") {return alert("Tarefa precisa ser preenchida")} 
