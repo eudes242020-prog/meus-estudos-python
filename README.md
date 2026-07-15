@@ -1,6 +1,10 @@
 # Meus Estudos em Python
 
-Repositório de aprendizado em **Python** com foco em **desenvolvimento backend**. Construído a partir de trilha de estudos progressiva e projetos práticos reais desenvolvidos do zero.
+Repositório de aprendizado em **Python** com foco em **desenvolvimento backend**. 
+
+[**live demo**](https://meus-estudos-python.onrender.com/) - Sistema de Controle de Tarefas - _cold start (de 30 a 50 segundos para inicializar)_
+
+Construído a partir de trilha de estudos progressiva e projetos práticos reais desenvolvidos do zero.
 
 ## Stack e Conceitos
 
@@ -36,11 +40,14 @@ Projeto construído do zero ao longo de múltiplas sessões práticas. Evoluiu d
 
 ```
 projetos/tarefas/
-├── app.py              # API REST (Flask): rotas GET/POST + serialização para JSON
+├── app.py              # API REST (Flask): rotas GET/POST/PUT/DELETE + serialização para JSON
 ├── tarefas.py          # Classe Tarefa + operações de CRUD (INSERT/UPDATE/DELETE)
 ├── dados_tarefas.py    # Camada de dados SQLite: CREATE TABLE, INSERT, SELECT
 ├── mostrar_tarefas.py  # Exibição formatada das tarefas (via __str__)
-└── main_tarefas.py     # Menu CLI com validação de input
+├── main_tarefas.py     # Menu CLI com validação de input
+├── test_app.py         # Testes automatizados com tratamento de erros
+├── requirements.txt    # Modulos para funcionamento
+└── templates           # Interface web que consome a API Flask.
 ```
 
 **Destaques técnicos:**
