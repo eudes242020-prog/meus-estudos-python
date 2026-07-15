@@ -132,7 +132,8 @@ python main.py
 | Banco de dados SQLite (CRUD completo por `id`, queries parametrizadas) | ✅ Concluído |
 | APIs REST com Flask (rotas GET/POST, PUT/DELETE por `id` com tratamento de erros HTTP) |✅ Concluído|
 | Testes automatizados - (rotas get/post - criar tarefa/remover/marcar e listar, erros tratados- pytest fixture arrumar banco)| ✅ Concluído |
-
+| Front consumindo a API usando HTML e JS (fetch e DOM) | ✅ Concluído |
+| Deploy integrando front e back via Render (Gunicorn + `requirements.txt`) | ✅ Concluído |
 ---
 
 *Foco: Backend Development*
