@@ -46,7 +46,7 @@ projetos/tarefas/
 ├── mostrar_tarefas.py  # Exibição formatada das tarefas (via __str__)
 ├── main_tarefas.py     # Menu CLI com validação de input
 ├── test_app.py         # Testes automatizados com tratamento de erros
-├── requirements.txt    # Modulos para funcionamento
+├── requirements.txt    # Lista de dependências necessárias para o projeto
 └── templates           # Interface web que consome a API Flask.
 ```
 
