@@ -1,12 +1,27 @@
 from banco_dados import produtos
 from utils import pausa_e_limpar
-def nome_produto():
+class Produto:
+    def __init__(self, id, nome, preco, estoque):
+        self.id=id
+        self.nome=nome
+        self.preco=preco
+        self.estoque=estoque
+    def ajuste(self,ajustar):
+        if self.estoque + ajustar < 0:
+            return 'Estoque não pode ficar negativo'
+        self.estoque+=ajustar
+        return
+    def __str__(self):
+        return f'ID: {self.id} | Nome: {self.nome} | Preço: R${self.preco:.2f} | Estoque: {self.estoque}'
+def pegar_nome(mensagem):
+    produto = input(mensagem).strip()
+    return produto
+def validar_nome():
     while True:
-        pausa_e_limpar()
-        produto = input('Informe o nome: ').strip()
-        if produto and len(produto) >= 2:
-            return produto.capitalize()
-        print("Nome inválido. Informe pelo menos 2 caracteres.")
+        nome=pegar_nome('Informe o nome: ')
+        if nome and len(nome) >= 2:
+            return nome
+        print('Nome não é valido')
 def codigo_produto():
     id=0
     if not produtos:
@@ -15,12 +30,27 @@ def codigo_produto():
     else:
         ids = [item['id'] for item in produtos]
         return max(ids)+1
-def preco_produto():
+def pegar_numero(mensagem):
+    numero=input(mensagem)
+    return numero
+def validar_numero():
     while True:
         try:
             pausa_e_limpar()
-            preco=float(input('Informe o valor do produto: '))
-            if preco<0:
+            qtd = int(pegar_numero('Quantos itens deseja: '))
+            if qtd < 0:
+                print('A quantidade não pode ser negativa.')
+                continue
+            return qtd
+        except ValueError:
+            print('Digite apenas números inteiros.')
+            continue
+def validar_preco():
+    while True:
+        try:
+            pausa_e_limpar()
+            preco=float(pegar_numero('Informe o valor do produto: '))
+            if preco<=0:
                 print('Apenas números positivo para adicionar um preço')
                 continue
             return preco
@@ -31,7 +61,7 @@ def quantidade_estoque():
     while True:
         try:
             pausa_e_limpar()
-            qtd = int(input('Informe a quantidade em estoque: '))
+            qtd = int(pegar_numero('Informe a quantidade em estoque: '))
             if qtd < 0:
                 print('A quantidade não pode ser negativa.')
                 continue
@@ -39,24 +69,17 @@ def quantidade_estoque():
         except ValueError:
             print('Digite apenas números inteiros.')
             continue
-def ajuste_estoque(quantidade_estoque):
+def ajuste_estoque():
     while True:
-        estoque=quantidade_estoque
         try:
             pausa_e_limpar()
             print('[1] Para adicionar no estoque\n[0] Para tirar do estoque')
-            escolha=int(input('Escolha a opção desejada: '))
+            escolha=int(pegar_numero('Escolha a opção desejada: '))
             if escolha==1:
-                qtd = int(input('Informe a quantidade que deseja adicionar: '))
-                if qtd < 0:
-                    print('A quantidade não pode ser negativa.')
-                    continue
+                qtd = int(pegar_numero('Informe a quantidade que deseja adicionar: '))
                 return qtd
             elif escolha==0:
-                qtd = int(input('Informe a quantidade que deseja tira do estoque: '))
-                if estoque - qtd < 0:
-                    print('Estoque não pode ficar negativo.')
-                    continue
+                qtd = int(pegar_numero('Informe a quantidade que deseja tira do estoque: '))
                 return -qtd
             else:
                 print('Opção inválida')
@@ -65,20 +88,16 @@ def ajuste_estoque(quantidade_estoque):
             print('Digite apenas números inteiros.')
             continue
 def cadastro_produto(lista_produtos):
-    nome = nome_produto()
-    preco = preco_produto()
+    nome = validar_nome()
+    preco = validar_preco()
     # Item de segurança: verifica se o item já está nas "prateleiras"
     for produto in lista_produtos:
-        if produto['nome'] == nome and produto['preço'] == preco:
-            ajuste = ajuste_estoque(produto['estoque'])
-            if ajuste is not None:
-                produto['estoque'] += ajuste
-            # Retornamos None para o main saber: "já cuidei disso, não adicione nada novo"
-            return None 
-    # Se chegou aqui, é um item totalmente novo
+        if produto.nome == nome and produto.preco == preco:
+            produto.ajuste(ajuste_estoque())
+            return None
     id = codigo_produto()
     quantidade = quantidade_estoque()
-    cadastro_novo = {'id': id, 'nome': nome, 'preço': preco, 'estoque': quantidade}
+    cadastro_novo = Produto(id=id, nome= nome,  preco= preco, estoque = quantidade)
     print(f"Produto {nome} cadastrado com sucesso!")
     return cadastro_novo # Devolve a "peça" pronta para o main
 def ver_produtos():
@@ -87,4 +106,4 @@ def ver_produtos():
     else:
         print("\n--- Produtos Cadastrados ---")
         for produto in produtos:
-            print(f"ID: {produto['id']} | Nome: {produto['nome']} | Preço: R${produto['preço']:.2f} | Estoque: {produto['estoque']}")
+            print(produto)

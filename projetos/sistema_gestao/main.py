@@ -1,4 +1,4 @@
-from banco_dados import lista_para_exibir, produtos, vendas
+from banco_dados import produtos, vendas
 from produtos import cadastro_produto, ver_produtos 
 from cadastro_clientes import ver_clientes, cadastro_completo, salvar_dados, carregar_dados
 from compras import registrar_compra
@@ -60,7 +60,11 @@ def executar_sistema():
                 if escolha_admin == 0:
                     break
                 elif escolha_admin == 1:
-                    cadastro_produto()
+                    produto=cadastro_produto(produtos)
+                    if produto is not None:
+                        produtos.append(produto)
+                    else:
+                        print("Produto ajustado")
                 elif escolha_admin == 2:
                     ver_produtos()
                     input('\nPressione ENTER para voltar...')

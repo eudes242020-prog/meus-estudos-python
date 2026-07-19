@@ -2,11 +2,7 @@ lista_para_exibir = [
     {'nome': 'João Silva', 'cpf': '12345678900', 'email': 'joao@email.com'},
     {'nome': 'Maria Souza', 'cpf': '98765432100', 'email': 'maria@email.com'}
 ]
-produtos = [{"id": 1, "nome": "Teclado Mecânico", "preço": 250.00, "estoque": 10},
-    {"id": 2, "nome": "Mouse Gamer", "preço": 120.00, "estoque": 15},
-    {"id": 3, "nome": "Monitor 24", "preço": 850.00, "estoque": 5},
-    {"id": 4, "nome": "Headset USB", "preço": 180.00, "estoque": 8},
-    {"id": 5, "nome": "Mousepad XL", "preço": 60.00, "estoque": 20}]
+produtos = []
 vendas = [  {
         'cliente': 'João Silva',
         'cpf': '12345678900',
