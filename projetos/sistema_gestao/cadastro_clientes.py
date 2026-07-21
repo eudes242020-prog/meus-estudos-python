@@ -1,28 +1,20 @@
 import json
 from utils import pausa_e_limpar
+from produtos import pegar_string, pegar_int, validar_nome
+class Cliente:
+    def __init__(self, nome, cpf, senha, email):
+        self.nome = nome
+        self.cpf = cpf
+        self.senha=senha
+        self.email=email
+
 def nome_cadastro():
     while True:
         pausa_e_limpar()
-        nome = input('Informe o nome: ').strip()
+        nome = pegar_string('Informe o nome: ').strip()
         if nome and len(nome) >= 2:
             return nome.capitalize()
         print("Nome inválido. Informe pelo menos 2 caracteres.")
-def cpf_cadastro():
-    while True:
-        pausa_e_limpar()
-        cpf_limpo = ''
-        cpf_sujo = input('Informe seu CPF: ')
-        for numero in cpf_sujo:
-            if numero.isdigit():
-                cpf_limpo += numero
-        cpf_limpo = cpf_limpo[:11] 
-        if len(cpf_limpo) < 11:
-            print('CPF incompleto.')
-            continue
-        sucesso = validar_cpf(cpf_limpo)
-        if sucesso:
-            return cpf_limpo
-        print('CPF inválido. Tente novamente.')
 def validar_cpf(cpf):
     primeiro_caractere = cpf[0]
     sequencia_repetida = primeiro_caractere * len(cpf)
@@ -51,10 +43,34 @@ def validar_cpf(cpf):
     if cpf == cpf_calculado:
         return True
     return False
+def criar_senha():
+    while True:
+        senha=pegar_string("Informe a senha: ").strip()
+        if len(senha) <=5:
+            print("Senha tem que ter mais de 5 caracteres ")
+            pausa_e_limpar()
+            continue
+        return senha
+def cpf_cadastro():
+    while True:
+        pausa_e_limpar()
+        cpf_limpo = ''
+        cpf_sujo = pegar_string('Informe seu CPF: ')
+        for numero in cpf_sujo:
+            if numero.isdigit():
+                cpf_limpo += numero
+        cpf_limpo = cpf_limpo[:11] 
+        if len(cpf_limpo) < 11:
+            print('CPF incompleto.')
+            continue
+        sucesso = validar_cpf(cpf_limpo)
+        if sucesso:
+            return cpf_limpo
+        return None
 def email_cadastro():
     while True:
         pausa_e_limpar()
-        email=input('Informe o email: ').strip().lower()
+        email=pegar_string('Informe o email: ').strip().lower()
         if email.count('@') != 1:
             print('Email inválido.')
             continue
@@ -64,16 +80,14 @@ def email_cadastro():
         print('Email inválido.')
 def cadastro_completo(lista_atual):
     nome=nome_cadastro()
-    cpf = cpf_cadastro()
+    cpf=cpf_cadastro()
     for cliente in lista_atual:
-        if cliente['cpf'] == cpf:
+        if cliente.cpf == cpf:
             print("Erro: CPF já cadastrado!")
             return
+    senha=criar_senha()
     email=email_cadastro()
-    if None in (nome,cpf,email):
-        print("Todos os dados devem ser preenchidos corretamente.")
-        return
-    novo_cadastro={'nome':nome, 'cpf': cpf, 'email': email}
+    novo_cadastro=Cliente(nome=nome, cpf=cpf, senha=senha, email=email)
     print("Cadastro realizado com sucesso!")
     return novo_cadastro
 def ver_clientes(lista_para_exibir):
@@ -82,18 +96,27 @@ def ver_clientes(lista_para_exibir):
     else:
         print("\n--- Clientes Cadastrados ---")
         for cliente in lista_para_exibir:
-            print(f"Nome: {cliente['nome']} - CPF: {cliente['cpf']} - Email: {cliente['email']}")
+            print(f"Nome: {cliente.nome} - CPF: {cliente.cpf} - Email: {cliente.email}")
 def salvar_dados(lista_clientes):
     try:
+        nova_lista=[]
         with open("config.json", "w", encoding='utf-8') as arquivo:
-            json.dump(lista_clientes, arquivo, indent=4, ensure_ascii=False)
+            for cliente in lista_clientes:
+                clientes={"nome": cliente.nome, "cpf": cliente.cpf, "senha": cliente.senha, "email": cliente.email }
+                nova_lista.append(clientes)
+            json.dump(nova_lista, arquivo, indent=4, ensure_ascii=False)
         print("Dados salvos com sucesso!")
     except Exception as e:
         print(f"Erro ao salvar dados: {e}")
     return lista_clientes
 def carregar_dados():
     try:
+        nova_lista=[]
         with open ("config.json", 'r',) as arquivo:
-            return json.load(arquivo)
+            dados=json.load(arquivo)
+        for cliente in dados:
+            novo=Cliente(nome=cliente["nome"], cpf=cliente['cpf'], senha=cliente["senha"], email=cliente["email"])
+            nova_lista.append(novo)
+        return nova_lista
     except:
         return []

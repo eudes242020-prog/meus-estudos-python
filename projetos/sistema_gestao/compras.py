@@ -1,7 +1,7 @@
 from banco_dados import produtos, lista_para_exibir, vendas
 from cadastro_clientes import cadastro_completo, cpf_cadastro
 from utils import pausa_e_limpar
-from produtos import ver_produtos, validar_numero, pegar_numero
+from produtos import ver_produtos, validar_numero, pegar_int
 def receber_cpf():
     return cpf_cadastro()
 def encontrar_cliente(cpf, lista_clientes):

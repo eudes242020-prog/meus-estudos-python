@@ -13,12 +13,12 @@ class Produto:
         return
     def __str__(self):
         return f'ID: {self.id} | Nome: {self.nome} | Preço: R${self.preco:.2f} | Estoque: {self.estoque}'
-def pegar_nome(mensagem):
+def pegar_string(mensagem):
     produto = input(mensagem).strip()
     return produto
 def validar_nome():
     while True:
-        nome=pegar_nome('Informe o nome: ')
+        nome=pegar_string('Informe o nome: ')
         if nome and len(nome) >= 2:
             return nome
         print('Nome não é valido')
@@ -30,14 +30,14 @@ def codigo_produto():
     else:
         ids = [item['id'] for item in produtos]
         return max(ids)+1
-def pegar_numero(mensagem):
+def pegar_int(mensagem):
     numero=input(mensagem)
     return numero
 def validar_numero():
     while True:
         try:
             pausa_e_limpar()
-            qtd = int(pegar_numero('Quantos itens deseja: '))
+            qtd = int(pegar_int('Quantos itens deseja: '))
             if qtd < 0:
                 print('A quantidade não pode ser negativa.')
                 continue
@@ -49,7 +49,7 @@ def validar_preco():
     while True:
         try:
             pausa_e_limpar()
-            preco=float(pegar_numero('Informe o valor do produto: '))
+            preco=float(pegar_int('Informe o valor do produto: '))
             if preco<=0:
                 print('Apenas números positivo para adicionar um preço')
                 continue
@@ -61,7 +61,7 @@ def quantidade_estoque():
     while True:
         try:
             pausa_e_limpar()
-            qtd = int(pegar_numero('Informe a quantidade em estoque: '))
+            qtd = int(pegar_int('Informe a quantidade em estoque: '))
             if qtd < 0:
                 print('A quantidade não pode ser negativa.')
                 continue
@@ -74,12 +74,12 @@ def ajuste_estoque():
         try:
             pausa_e_limpar()
             print('[1] Para adicionar no estoque\n[0] Para tirar do estoque')
-            escolha=int(pegar_numero('Escolha a opção desejada: '))
+            escolha=int(pegar_int('Escolha a opção desejada: '))
             if escolha==1:
-                qtd = int(pegar_numero('Informe a quantidade que deseja adicionar: '))
+                qtd = int(pegar_int('Informe a quantidade que deseja adicionar: '))
                 return qtd
             elif escolha==0:
-                qtd = int(pegar_numero('Informe a quantidade que deseja tira do estoque: '))
+                qtd = int(pegar_int('Informe a quantidade que deseja tira do estoque: '))
                 return -qtd
             else:
                 print('Opção inválida')
