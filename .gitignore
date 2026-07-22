@@ -9,7 +9,7 @@ __pycache__/
 *.db
 *.sqlite
 *.sqlite3
-tarefas.json
+*.json
 
 Exercicios_backup/
 Revisoes_backup/

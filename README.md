@@ -64,20 +64,31 @@ projetos/tarefas/
 - Ponte linha↔objeto: tupla `(id, tarefa, status)` reconstruída em `Tarefa` ao carregar
 - Arquitetura modular com responsabilidades bem definidas por arquivo
 
-### Sistema de Gestão (CLI)
+### Sistema de Gestão (CLI + POO)
 
-Sistema de linha de comando com dois perfis de acesso (Administrador e Cliente), cadastro de clientes com persistência em JSON, controle de estoque, registro de vendas e relatórios.
+Sistema de linha de comando com dois perfis de acesso (Administrador e Cliente), cadastro de clientes com persistência em JSON, controle de estoque, registro de vendas e relatórios. Migrado de dicionários soltos para **classes** (`Produto` e `Cliente`), com validação de entrada em cada etapa do cadastro.
 
 ```
 projetos/sistema_gestao/
 ├── main.py               # Menus e fluxo principal
 ├── banco_dados.py        # Dados iniciais
-├── cadastro_clientes.py  # Cadastro e validação (CPF único)
+├── cadastro_clientes.py  # Classe Cliente + validação de CPF/e-mail/senha + salvar/carregar JSON
 ├── compras.py            # Registro de compras e estoque
-├── produtos.py           # Cadastro e exibição de produtos
+├── produtos.py           # Classe Produto (__str__, ajuste de estoque) + validação de preço/quantidade
 ├── relatorios.py         # Relatórios de vendas
 └── utils.py              # Funções utilitárias
 ```
+
+> O arquivo `config.json` (persistência dos clientes) é gerado na primeira execução e não é versionado.
+
+**Destaques técnicos:**
+- Classe `Produto` com `__str__` e método `ajuste(self, ajustar)` que altera estoque e bloqueia saldo negativo
+- Classe `Cliente` substituindo o dicionário anterior, com CPF único verificado antes do cadastro
+- **Validação de CPF pelos dígitos verificadores** (cálculo dos dois dígitos + rejeição de sequências repetidas), não apenas contagem de caracteres
+- Limpeza de input: extrai só os dígitos do CPF digitado, aceitando formatos com ponto e traço
+- Persistência em JSON com ponte objeto↔dict: `salvar_dados` serializa a lista de `Cliente` e `carregar_dados` reconstrói os objetos na abertura do programa
+- Geração automática de `id` de produto a partir do maior existente
+- Funções de entrada com laço de repetição até o dado ser válido (nome, preço, quantidade, e-mail, senha)
 
 Veja mais detalhes em [projetos/sistema_gestao/README.md](projetos/sistema_gestao/README.md).
 
@@ -86,8 +97,6 @@ Veja mais detalhes em [projetos/sistema_gestao/README.md](projetos/sistema_gesta
 ```
 meus-estudos-python/
 ├── Trilha_Estudos/          # 21 tópicos estudados progressivamente
-├── Exercicios_backup/       # 57+ exercícios de lógica e estruturas de dados
-├── Revisoes_backup/         # Revisões e estudos teóricos
 └── projetos/
     ├── tarefas/             # Projeto POO + CRUD SQLite + API REST (Flask)
     └── sistema_gestao/      # Sistema CLI com múltiplos módulos
@@ -134,6 +143,7 @@ python main.py
 | Testes automatizados - (rotas get/post - criar tarefa/remover/marcar e listar, erros tratados- pytest fixture arrumar banco)| ✅ Concluído |
 | Front consumindo a API usando HTML e JS (fetch e DOM) | ✅ Concluído |
 | Deploy integrando front e back via Render (Gunicorn + `requirements.txt`) | ✅ Concluído |
+| Refatoração do Sistema de Gestão para POO (`Produto`, `Cliente`) + persistência em JSON | ✅ Concluído |
 ---
 
 *Foco: Backend Development*
