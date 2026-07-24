@@ -23,12 +23,11 @@ def validar_nome():
             return nome
         print('Nome não é valido')
 def codigo_produto():
-    id=0
     if not produtos:
-        id+=1
+        id=1
         return id
     else:
-        ids = [item['id'] for item in produtos]
+        ids = [item.id for item in produtos]
         return max(ids)+1
 def pegar_int(mensagem):
     numero=input(mensagem)

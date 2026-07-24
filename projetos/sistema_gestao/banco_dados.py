@@ -28,3 +28,4 @@ vendas = [  {
         ],
         'total': 59.70
     }]
+admins=[]
