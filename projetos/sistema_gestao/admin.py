@@ -46,5 +46,7 @@ def criar_admin(admins):
         id=codigo_admin()
         senha=validar_senha()
         adm=Admin(id=id,nome=nome,senha=senha)
+        admins.append(adm)
         print('Admin criado com sucesso')
         return adm
+    
