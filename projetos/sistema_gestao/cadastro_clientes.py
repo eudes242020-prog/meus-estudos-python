@@ -43,7 +43,7 @@ def validar_cpf(cpf):
     if cpf == cpf_calculado:
         return True
     return False
-def criar_senha():
+def senha_cliente():
     while True:
         senha=pegar_string("Informe a senha: ").strip()
         if len(senha) <=5:
@@ -85,7 +85,7 @@ def cadastro_completo(lista_atual):
         if cliente.cpf == cpf:
             print("Erro: CPF já cadastrado!")
             return
-    senha=criar_senha()
+    senha=senha_cliente()
     email=email_cadastro()
     novo_cadastro=Cliente(nome=nome, cpf=cpf, senha=senha, email=email)
     print("Cadastro realizado com sucesso!")

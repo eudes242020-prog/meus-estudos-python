@@ -5,7 +5,7 @@ from compras import registrar_compra
 from utils import pausa_e_limpar
 from relatorios import listar_vendas, vendas_por_cliente, total_gasto_por_cliente
 from admin import validar_admin, validar_senha,criar_admin,validar_admin,codigo_admin
-from login import login_admin
+from login import login_admin,login_cliente
 menu_administrador = {
     1: "Cadastrar produto",
     2: "Ver produtos cadastrados",
@@ -96,8 +96,10 @@ def executar_sistema():
                         clientes.append(novo)
                         salvar_dados(clientes)
                 elif escolha_cliente == 2:
-                    registrar_compra(clientes, produtos, vendas)
-                pausa_e_limpar()
+                    login=login_cliente()
+                    if login:
+                        registrar_compra(clientes, produtos, vendas)
+                pausa_e_limpar()                  
         else:
             print('Opção invalida')
             pausa_e_limpar()
