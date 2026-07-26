@@ -9,8 +9,6 @@ def login_admin(lista):
         if logar=="0":
             return False
         trava_senha=False
-        if not lista:
-            criar_admin(lista)
         login=validar_admin()
         for adm in lista:
             if adm.nome==login:

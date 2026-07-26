@@ -33,20 +33,27 @@ def validar_senha():
         return admin
 def criar_admin(admins):
     while True:
-        trava=False
-        nome=validar_admin()
-        for valor in admins:
-            if valor.nome == nome:
-                print("Já existe um ADMIN com esse nome escolha outro!!")
-                pausa_e_limpar()
-                trava=True
-                break
-        if trava:
-            continue
-        id=codigo_admin()
-        senha=validar_senha()
-        adm=Admin(id=id,nome=nome,senha=senha)
-        admins.append(adm)
-        print('Admin criado com sucesso')
-        return adm
-    
+        if not admins:
+            nome=validar_admin()
+            id=codigo_admin()
+            senha=validar_senha()
+            adm=Admin(id=id,nome=nome,senha=senha)
+            admins.append(adm)
+            return adm
+        else:
+            trava=False
+            nome=validar_admin()
+            for valor in admins:
+                if valor.nome == nome:
+                    print("Já existe um ADMIN com esse nome escolha outro!!")
+                    pausa_e_limpar()
+                    trava=True
+                    break
+            if trava:
+                continue
+            id=codigo_admin()
+            senha=validar_senha()
+            adm=Admin(id=id,nome=nome,senha=senha)
+            admins.append(adm)
+            print('Admin criado com sucesso')
+            return adm

@@ -7,12 +7,13 @@ from relatorios import listar_vendas, vendas_por_cliente, total_gasto_por_client
 from admin import validar_admin, validar_senha,criar_admin,validar_admin,codigo_admin
 from login import login_admin,login_cliente
 menu_administrador = {
-    1: "Cadastrar produto",
-    2: "Ver produtos cadastrados",
-    3: "Ver clientes cadastrados",
-    4: "Relatório de Vendas",
-    5: "Vendas por Cliente",
-    6: "Total Gasto por Cliente",
+    1: "Criar ADMINISTRADOR",
+    2: "Cadastrar produto",
+    3: "Ver produtos cadastrados",
+    4: "Ver clientes cadastrados",
+    5: "Relatório de Vendas",
+    6: "Vendas por Cliente",
+    7: 'Total Gasto por Cliente',
     0: "Voltar"
 }
 adm_cliente ={
@@ -46,14 +47,14 @@ def obter_escolha():
         return None
 def executar_sistema():
     clientes = carregar_dados()
+    if not admins:
+        criar_admin(admins)
     while True:
         primeiro_menu(adm_cliente)
         decisao = obter_escolha()
-
         if decisao == 0:
             print("Saindo do programa!")
             break
-
         elif decisao == 1:  # ADMINISTRADOR
             adm=login_admin(admins)
             if adm:
@@ -63,24 +64,26 @@ def executar_sistema():
                     if escolha_admin == 0:
                         break
                     elif escolha_admin == 1:
+                        criar_admin(admins)
+                    elif escolha_admin == 2:
                         produto=cadastro_produto(produtos)
                         if produto is not None:
                             produtos.append(produto)
                         else:
                             print("Produto ajustado")
-                    elif escolha_admin == 2:
+                    elif escolha_admin == 3:
                         ver_produtos()
                         input('\nPressione ENTER para voltar...')
-                    elif escolha_admin == 3:
+                    elif escolha_admin == 4:
                         ver_clientes(clientes)
                         input('\nPressione ENTER para voltar...')
-                    elif escolha_admin == 4:
+                    elif escolha_admin == 5:
                         listar_vendas()
                         input('\nPressione ENTER para voltar...')
-                    elif escolha_admin == 5:
+                    elif escolha_admin == 6:
                         vendas_por_cliente()
                         input('\nPressione ENTER para voltar...')
-                    elif escolha_admin == 6:
+                    elif escolha_admin == 7:
                         total_gasto_por_cliente()
                         input('\nPressione ENTER para voltar...')
                     pausa_e_limpar()
