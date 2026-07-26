@@ -5,6 +5,9 @@ from banco_dados import admins
 from cadastro_clientes import Cliente,carregar_dados,nome_cadastro,cpf_cadastro,senha_cliente,validar_cpf,email_cadastro,cpf_cadastro
 def login_admin(lista):
     while True:
+        logar=input("[1] Logar / [0] Voltar: ")
+        if logar=="0":
+            return False
         trava_senha=False
         if not lista:
             criar_admin(lista)
