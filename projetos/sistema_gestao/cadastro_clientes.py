@@ -5,8 +5,8 @@ class Cliente:
     def __init__(self, nome, cpf, senha, email):
         self.nome = nome
         self.cpf = cpf
-        self.senha=senha
-        self.email=email
+        self._senha = senha
+        self.email = email
 
 def nome_cadastro():
     while True:

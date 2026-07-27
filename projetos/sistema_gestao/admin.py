@@ -5,7 +5,7 @@ class Admin:
     def __init__(self, id, nome, senha):
         self.id=id
         self.nome=nome
-        self.senha=senha
+        self._senha=senha
     def __str__(self):
         return f'ID ADMIN: {self.id} ADMIN: {self.nome}'
 def validar_admin():
