@@ -6,6 +6,11 @@ class Admin:
         self.id=id
         self.nome=nome
         self._senha=senha
+    def checar_senha(self,nova):
+        if len(nova) <= 5:
+            return 'Senha invalida'
+        self._senha=nova
+        return 'Senha valida'
     def __str__(self):
         return f'ID ADMIN: {self.id} ADMIN: {self.nome}'
 def validar_admin():

@@ -7,7 +7,13 @@ class Cliente:
         self.cpf = cpf
         self._senha = senha
         self.email = email
-
+    def checar_senha(self,nova):
+        if len(nova) <= 5:
+            return 'Senha invalida'
+        self._senha=nova
+        return 'Senha valida'
+    def __str__(self):
+        return f'LOGIN : {self.nome} CPF : {self.cpf} EMAIL : {self.email}'
 def nome_cadastro():
     while True:
         pausa_e_limpar()
