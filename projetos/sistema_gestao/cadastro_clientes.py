@@ -7,7 +7,11 @@ class Cliente:
         self.cpf = cpf
         self._senha = senha
         self.email = email
-    def checar_senha(self,nova):
+    @property
+    def senha(self):
+        return self._senha
+    @senha.setter
+    def senha(self,nova):
         if len(nova) <= 5:
             return 'Senha invalida'
         self._senha=nova
