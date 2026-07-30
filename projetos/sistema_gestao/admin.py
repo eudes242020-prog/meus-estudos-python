@@ -12,9 +12,10 @@ class Admin:
     @senha.setter
     def senha(self,nova):
         if len(nova) <= 5:
-            return 'Senha invalida'
+            print('Senha invalida')
+            return 
         self._senha=nova
-        return 'Senha valida'
+        print('Senha valida')
     def __str__(self):
         return f'ID ADMIN: {self.id} ADMIN: {self.nome}'
 def validar_admin():

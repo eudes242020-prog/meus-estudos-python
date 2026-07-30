@@ -13,9 +13,10 @@ class Cliente:
     @senha.setter
     def senha(self,nova):
         if len(nova) <= 5:
-            return 'Senha invalida'
+            print('Senha invalida')
+            return 
         self._senha=nova
-        return 'Senha valida'
+        print('Senha valida')
     def __str__(self):
         return f'LOGIN : {self.nome} CPF : {self.cpf} EMAIL : {self.email}'
 def nome_cadastro():
