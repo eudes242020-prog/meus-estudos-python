@@ -10,6 +10,18 @@ class Cliente:
     @property
     def senha(self):
         return self._senha
+    @property
+    def email(self):
+        return self._email
+    @email.setter
+    def email(self,checar):
+        if checar.count('@') != 1:
+            print('Email inválido.')
+            return
+        partes = checar.split('@')
+        if "." in partes[1] and partes[0]:
+            print("EMAIL valido")
+            self._email=checar
     @senha.setter
     def senha(self,nova):
         if len(nova) <= 5:
@@ -79,16 +91,9 @@ def cpf_cadastro():
             return cpf_limpo
         return None
 def email_cadastro():
-    while True:
         pausa_e_limpar()
         email=pegar_string('Informe o email: ').strip().lower()
-        if email.count('@') != 1:
-            print('Email inválido.')
-            continue
-        partes = email.split('@')
-        if "." in partes[1] and partes[0]:
-            return email
-        print('Email inválido.')
+        return email
 def cadastro_completo(lista_atual):
     nome=nome_cadastro()
     cpf=cpf_cadastro()
