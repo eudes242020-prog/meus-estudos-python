@@ -1,48 +1,11 @@
 import json
 from utils import pausa_e_limpar
 from produtos import pegar_string, pegar_int, validar_nome
-class Cliente:
-    def __init__(self, nome, cpf, senha, email):
-        self.nome = nome
-        self.cpf = cpf
-        self._senha = senha
-        self.email = email
-    @property
-    def senha(self):
-        return self._senha
-    @property
-    def email(self):
-        return self._email
-    @email.setter
-    def email(self,checar):
-        if checar.count('@') != 1:
-            self._email=None
-            return
-        partes = checar.split('@')
-        if "." in partes[1] and partes[0]:
-            self._email=checar
-    @senha.setter
-    def senha(self,nova):
-        if len(nova) <= 5:
-            print('Senha invalida')
-            return 
-        self._senha=nova
-        print('Senha valida')
-    def __str__(self):
-        return f'LOGIN : {self.nome} CPF : {self.cpf} EMAIL : {self.email}'
-def nome_cadastro():
-    while True:
-        pausa_e_limpar()
-        nome = pegar_string('Informe o nome: ').strip()
-        if nome and len(nome) >= 2:
-            return nome.capitalize()
-        print("Nome inválido. Informe pelo menos 2 caracteres.")
 def validar_cpf(cpf):
     primeiro_caractere = cpf[0]
     sequencia_repetida = primeiro_caractere * len(cpf)
     if cpf == sequencia_repetida:
-        print('Você digitou dados iguais, CPF invalido!')
-        return False
+        return None
     nove_digitos=cpf[:9] 
     contador_regressivo_1 = 10
     resultado_digito_1 = 0
@@ -64,7 +27,59 @@ def validar_cpf(cpf):
     cpf_calculado = f'{nove_digitos}{digit_1}{digit_2}'
     if cpf == cpf_calculado:
         return True
-    return False
+    return None
+class Cliente:
+    def __init__(self, nome, cpf, senha, email):
+        self.nome = nome
+        self.cpf = cpf
+        self._senha = senha
+        self.email = email
+    @property
+    def senha(self):
+        return self._senha
+    @property
+    def email(self):
+        return self._email
+    @property
+    def cpf(self):
+        return self._cpf
+    @cpf.setter
+    def cpf(self,checar):
+        cpf_verificar=validar_cpf(checar)
+        if cpf_verificar is not None:
+            self._cpf=checar
+            return
+        self._cpf=None
+    @email.setter
+    def email(self,checar):
+        if checar.count('@') != 1:
+            self._email=None
+            return
+        partes = checar.split('@')
+        if "." in partes[1] and partes[0]:
+            self._email=checar
+    @senha.setter
+    def senha(self,nova):
+        if len(nova) <= 5:
+            print('Senha invalida')
+            return 
+        self._senha=nova
+        print('Senha valida')
+    def __str__(self):
+        return f'LOGIN : {self.nome} CPF : {self.cpf} EMAIL : {self.email}'
+c = Cliente("joao", "12345678901", "senhaboa", "eudes242020@gmail.com")
+if c.cpf is None:
+    print('Email inválido.')
+else: 
+    print("EMAIL valido")
+def nome_cadastro():
+    while True:
+        pausa_e_limpar()
+        nome = pegar_string('Informe o nome: ').strip()
+        if nome and len(nome) >= 2:
+            return nome.capitalize()
+        print("Nome inválido. Informe pelo menos 2 caracteres.")
+
 def senha_cliente():
     while True:
         senha=pegar_string("Informe a senha: ").strip()
