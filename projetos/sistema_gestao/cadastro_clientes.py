@@ -16,11 +16,10 @@ class Cliente:
     @email.setter
     def email(self,checar):
         if checar.count('@') != 1:
-            print('Email inválido.')
+            self._email=None
             return
         partes = checar.split('@')
         if "." in partes[1] and partes[0]:
-            print("EMAIL valido")
             self._email=checar
     @senha.setter
     def senha(self,nova):
