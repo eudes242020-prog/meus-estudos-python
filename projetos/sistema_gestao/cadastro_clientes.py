@@ -76,11 +76,6 @@ class Cliente:
         print('Senha valida')
     def __str__(self):
         return f'LOGIN : {self.nome} CPF : {self.cpf} EMAIL : {self.email}'
-c = Cliente("eu", "12345678901", "senhaboa", "eudes242020@gmail.com")
-if c.nome is None:
-    print('nome inválido.')
-else: 
-    print("nome valido")
 def nome_cadastro():
     while True:
         pausa_e_limpar()
