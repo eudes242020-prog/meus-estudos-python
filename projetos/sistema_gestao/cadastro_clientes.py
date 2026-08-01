@@ -35,6 +35,9 @@ class Cliente:
         self._senha = senha
         self.email = email
     @property
+    def nome(self):
+        return self._nome      
+    @property
     def senha(self):
         return self._senha
     @property
@@ -43,6 +46,12 @@ class Cliente:
     @property
     def cpf(self):
         return self._cpf
+    @nome.setter
+    def nome(self, checar):
+        if len(checar)> 2:
+            self._nome=checar
+            return
+        self._nome=None
     @cpf.setter
     def cpf(self,checar):
         cpf_verificar=validar_cpf(checar)
@@ -67,11 +76,11 @@ class Cliente:
         print('Senha valida')
     def __str__(self):
         return f'LOGIN : {self.nome} CPF : {self.cpf} EMAIL : {self.email}'
-c = Cliente("joao", "12345678901", "senhaboa", "eudes242020@gmail.com")
-if c.cpf is None:
-    print('Email inválido.')
+c = Cliente("eu", "12345678901", "senhaboa", "eudes242020@gmail.com")
+if c.nome is None:
+    print('nome inválido.')
 else: 
-    print("EMAIL valido")
+    print("nome valido")
 def nome_cadastro():
     while True:
         pausa_e_limpar()
