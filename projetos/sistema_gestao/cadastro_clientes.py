@@ -70,12 +70,16 @@ class Cliente:
     @senha.setter
     def senha(self,nova):
         if len(nova) <= 5:
-            print('Senha invalida')
+            self._senha=None
             return 
         self._senha=nova
-        print('Senha valida')
     def __str__(self):
         return f'LOGIN : {self.nome} CPF : {self.cpf} EMAIL : {self.email}'
+c = Cliente("joao", "12345678901", "senhaboa", "eudes242020@gmail.com")
+if c.senha is None:
+    print("senha invalida")
+else: 
+    print('senha valida.') 
 def nome_cadastro():
     while True:
         pausa_e_limpar()
