@@ -28,6 +28,16 @@ def validar_cpf(cpf):
     if cpf == cpf_calculado:
         return True
     return None
+def verificar_nome(nome):
+    if len(nome)> 2:
+        return True
+    return None
+def nome_cadastro():
+    while True:
+        pausa_e_limpar()
+        nome = pegar_string('Informe o nome: ').strip()
+        if verificar_nome(nome):
+            return nome.capitalize()
 class Cliente:
     def __init__(self, nome, cpf, senha, email):
         self.nome = nome
@@ -48,7 +58,8 @@ class Cliente:
         return self._cpf
     @nome.setter
     def nome(self, checar):
-        if len(checar)> 2:
+        nome=verificar_nome(checar)
+        if nome:
             self._nome=checar
             return
         self._nome=None
@@ -75,10 +86,6 @@ class Cliente:
         self._senha=nova
     def __str__(self):
         return f'LOGIN : {self.nome} CPF : {self.cpf} EMAIL : {self.email}'
-def nome_cadastro():
-    pausa_e_limpar()
-    nome = pegar_string('Informe o nome: ').strip()
-    return nome.capitalize()
 def senha_cliente():
     senha=pegar_string("Informe a senha: ").strip()
     return senha
