@@ -98,6 +98,7 @@ def email_cadastro():
     return email
 def cadastro_completo(lista_atual):
     while True:
+        invalido=False
         nome=nome_cadastro()
         cpf=cpf_cadastro()
         for cliente in lista_atual:
@@ -107,21 +108,21 @@ def cadastro_completo(lista_atual):
         senha=senha_cliente()
         email=email_cadastro()
         novo_cadastro=Cliente(nome=nome, cpf=cpf, senha=senha, email=email)
+        if novo_cadastro.nome is None or novo_cadastro.cpf is None or novo_cadastro.senha is None or novo_cadastro.email is None:
+            invalido=True
         if novo_cadastro.nome is None:
             print("Nome invalido")
-            continue
         if novo_cadastro.cpf is None:
             print("CPF invalido")
-            continue
         if novo_cadastro.senha is None:
             print('Senha invalida')
-            continue
         if novo_cadastro.email is None:
             print('Email invalido')
+        if invalido:
+            escolha=input('Deseja para de fazer o cadastro: [sim]/[não]')
+            if escolha !='não':
+                break
             continue
-        escolha=input('Deseja para de fazer o cadastro: [sim]/[não]')
-        if escolha !='não':
-            break
         print("Cadastro realizado com sucesso!")
         return novo_cadastro
 def ver_clientes(lista_para_exibir):
