@@ -32,7 +32,7 @@ class Cliente:
     def __init__(self, nome, cpf, senha, email):
         self.nome = nome
         self.cpf = cpf
-        self._senha = senha
+        self.senha = senha
         self.email = email
     @property
     def nome(self):
@@ -76,53 +76,54 @@ class Cliente:
     def __str__(self):
         return f'LOGIN : {self.nome} CPF : {self.cpf} EMAIL : {self.email}'
 def nome_cadastro():
-    while True:
-        pausa_e_limpar()
-        nome = pegar_string('Informe o nome: ').strip()
-        if nome and len(nome) >= 2:
-            return nome.capitalize()
-        print("Nome inválido. Informe pelo menos 2 caracteres.")
-
+    pausa_e_limpar()
+    nome = pegar_string('Informe o nome: ').strip()
+    return nome.capitalize()
 def senha_cliente():
-    while True:
-        senha=pegar_string("Informe a senha: ").strip()
-        if len(senha) <=5:
-            print("Senha tem que ter mais de 5 caracteres ")
-            pausa_e_limpar()
-            continue
-        return senha
+    senha=pegar_string("Informe a senha: ").strip()
+    return senha
 def cpf_cadastro():
-    while True:
-        pausa_e_limpar()
-        cpf_limpo = ''
-        cpf_sujo = pegar_string('Informe seu CPF: ')
-        for numero in cpf_sujo:
-            if numero.isdigit():
-                cpf_limpo += numero
-        cpf_limpo = cpf_limpo[:11] 
-        if len(cpf_limpo) < 11:
-            print('CPF incompleto.')
-            continue
-        sucesso = validar_cpf(cpf_limpo)
-        if sucesso:
-            return cpf_limpo
-        return None
+    cpf_limpo = ''
+    cpf_sujo = pegar_string('Informe seu CPF: ')
+    for numero in cpf_sujo:
+        if numero.isdigit():
+            cpf_limpo += numero
+    cpf_limpo = cpf_limpo[:11] 
+    if cpf_limpo:
+        return cpf_limpo
+    return None
 def email_cadastro():
-        pausa_e_limpar()
-        email=pegar_string('Informe o email: ').strip().lower()
-        return email
+    pausa_e_limpar()
+    email=pegar_string('Informe o email: ').strip().lower()
+    return email
 def cadastro_completo(lista_atual):
-    nome=nome_cadastro()
-    cpf=cpf_cadastro()
-    for cliente in lista_atual:
-        if cliente.cpf == cpf:
-            print("Erro: CPF já cadastrado!")
-            return
-    senha=senha_cliente()
-    email=email_cadastro()
-    novo_cadastro=Cliente(nome=nome, cpf=cpf, senha=senha, email=email)
-    print("Cadastro realizado com sucesso!")
-    return novo_cadastro
+    while True:
+        nome=nome_cadastro()
+        cpf=cpf_cadastro()
+        for cliente in lista_atual:
+            if cliente.cpf == cpf:
+                print("Erro: CPF já cadastrado!")
+                return
+        senha=senha_cliente()
+        email=email_cadastro()
+        novo_cadastro=Cliente(nome=nome, cpf=cpf, senha=senha, email=email)
+        if novo_cadastro.nome is None:
+            print("Nome invalido")
+            continue
+        if novo_cadastro.cpf is None:
+            print("CPF invalido")
+            continue
+        if novo_cadastro.senha is None:
+            print('Senha invalida')
+            continue
+        if novo_cadastro.email is None:
+            print('Email invalido')
+            continue
+        escolha=input('Deseja para de fazer o cadastro: [sim]/[não]')
+        if escolha !='não':
+            break
+        print("Cadastro realizado com sucesso!")
+        return novo_cadastro
 def ver_clientes(lista_para_exibir):
     if not lista_para_exibir:
         print("Nenhum cliente cadastrado.")
