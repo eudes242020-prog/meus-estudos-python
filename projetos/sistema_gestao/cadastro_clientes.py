@@ -29,7 +29,8 @@ def validar_cpf(cpf):
         return True
     return None
 def verificar_nome(nome):
-    if len(nome)> 2:
+    trava=any( letra.isdigit() for letra in nome)
+    if len(nome)> 2 and trava is False:
         return True
     return None
 def nome_cadastro():
