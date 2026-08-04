@@ -2,6 +2,8 @@ import json
 from utils import pausa_e_limpar
 from produtos import pegar_string, pegar_int, validar_nome
 def validar_cpf(cpf):
+    if not cpf:
+        return None
     primeiro_caractere = cpf[0]
     sequencia_repetida = primeiro_caractere * len(cpf)
     if cpf == sequencia_repetida:
@@ -91,15 +93,18 @@ def senha_cliente():
     senha=pegar_string("Informe a senha: ").strip()
     return senha
 def cpf_cadastro():
-    cpf_limpo = ''
-    cpf_sujo = pegar_string('Informe seu CPF: ')
-    for numero in cpf_sujo:
-        if numero.isdigit():
-            cpf_limpo += numero
-    cpf_limpo = cpf_limpo[:11] 
-    if cpf_limpo:
-        return cpf_limpo
-    return None
+    while True:
+        cpf_limpo = ''
+        cpf_sujo = pegar_string('Informe seu CPF: ').strip()
+        for numero in cpf_sujo:
+            if numero.isdigit():
+                cpf_limpo += numero
+        cpf_limpo = cpf_limpo[:11] 
+        validar=validar_cpf(cpf_limpo)
+        if validar:
+            return cpf_limpo
+        print('CPF INVALIDO')
+        pausa_e_limpar()
 def email_cadastro():
     pausa_e_limpar()
     email=pegar_string('Informe o email: ').strip().lower()
