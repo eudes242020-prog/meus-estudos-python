@@ -124,11 +124,12 @@ def cpf_cadastro():
         print('CPF INVALIDO')
         pausa_e_limpar()
 def email_cadastro():
-    email=pegar_string('Informe o email: ').strip().lower()
-    if verificar_email(email):
-        return email
-    print('Email Invalido')
-    pausa_e_limpar()
+    while True:
+        email=pegar_string('Informe o email: ').strip().lower()
+        if verificar_email(email):
+            return email
+        print('Email Invalido')
+        pausa_e_limpar()
 def cadastro_completo(lista_atual):
     while True:
         invalido=False
