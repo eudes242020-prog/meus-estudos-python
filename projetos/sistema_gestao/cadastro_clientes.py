@@ -41,6 +41,15 @@ def nome_cadastro():
         nome = pegar_string('Informe o nome: ').strip()
         if verificar_nome(nome):
             return nome.capitalize()
+        print('Nome Invalido precisa ter mais que duas letras')
+        pausa_e_limpar()
+def verificar_email(email):
+    if email.count('@') != 1:
+        return None
+    partes = email.split('@')
+    if "." in partes[1] and partes[0]:
+        return True
+    return None
 class Cliente:
     def __init__(self, nome, cpf, senha, email):
         self.nome = nome
@@ -75,12 +84,11 @@ class Cliente:
         self._cpf=None
     @email.setter
     def email(self,checar):
-        if checar.count('@') != 1:
-            self._email=None
-            return
-        partes = checar.split('@')
-        if "." in partes[1] and partes[0]:
+        email=verificar_email(checar)
+        if email is not None:
             self._email=checar
+            return
+        self._email=None
     @senha.setter
     def senha(self,nova):
         senha=verificar_senha(nova)
@@ -116,9 +124,11 @@ def cpf_cadastro():
         print('CPF INVALIDO')
         pausa_e_limpar()
 def email_cadastro():
-    pausa_e_limpar()
     email=pegar_string('Informe o email: ').strip().lower()
-    return email
+    if verificar_email(email):
+        return email
+    print('Email Invalido')
+    pausa_e_limpar()
 def cadastro_completo(lista_atual):
     while True:
         invalido=False
