@@ -83,15 +83,25 @@ class Cliente:
             self._email=checar
     @senha.setter
     def senha(self,nova):
-        if len(nova) <= 5:
-            self._senha=None
+        senha=verificar_senha(nova)
+        if senha:
+            self._senha=nova
             return 
-        self._senha=nova
+        self._senha=None
     def __str__(self):
         return f'LOGIN : {self.nome} CPF : {self.cpf} EMAIL : {self.email}'
 def senha_cliente():
-    senha=pegar_string("Informe a senha: ").strip()
-    return senha
+    while True:
+        senha=pegar_string("Informe a senha: ").strip()
+        verificar=verificar_senha(senha)
+        if verificar:
+            return senha
+        print('Senha Invalida, precisa ter minimo de 6 caracteres')
+        pausa_e_limpar()
+def verificar_senha(senha):
+        if len(senha) > 5:
+            return True
+        return None
 def cpf_cadastro():
     while True:
         cpf_limpo = ''
