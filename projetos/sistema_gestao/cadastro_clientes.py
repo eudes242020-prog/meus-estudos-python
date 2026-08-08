@@ -138,7 +138,7 @@ def cadastro_completo(lista_atual):
         for cliente in lista_atual:
             if cliente.cpf == cpf:
                 print("Erro: CPF já cadastrado!")
-                return
+                return None
         senha=senha_cliente()
         email=email_cadastro()
         novo_cadastro=Cliente(nome=nome, cpf=cpf, senha=senha, email=email)
