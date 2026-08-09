@@ -100,8 +100,8 @@ def executar_sistema():
                         salvar_dados(clientes)
                 elif escolha_cliente == 2:
                     login=login_cliente()
-                    if login:
-                        registrar_compra(clientes, produtos, vendas)
+                    if login is not None:
+                        registrar_compra(login, produtos, vendas)
                 pausa_e_limpar()                  
         else:
             print('Opção invalida')

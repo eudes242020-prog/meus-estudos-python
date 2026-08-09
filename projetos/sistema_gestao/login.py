@@ -29,7 +29,7 @@ def login_cliente():
     while True:
         logar=input("[1] Logar / [0] Voltar: ")
         if logar=="0":
-            return False
+            return None
         trava_senha=False
         clientes=carregar_dados()
         cpf=cpf_cadastro()
@@ -38,7 +38,7 @@ def login_cliente():
                 senha=senha_cliente()
                 if cliente.senha==senha:
                     print('Acesso concedido')
-                    return True
+                    return cliente
                 else:
                     trava_senha=True
                     break
