@@ -8,7 +8,7 @@ def encontrar_cliente(cpf, lista_clientes):
     while True:
         # 1. Tenta achar o cliente na lista
         for cliente in lista_clientes:
-            if cliente['cpf'] == cpf:
+            if cliente.cpf == cpf:
                 return cliente 
         print(f"CPF {cpf} não encontrado no sistema.")
         escolha = input("Deseja realizar o cadastro agora para continuar a compra? (sim/não): ").lower().strip()
@@ -44,13 +44,13 @@ def registrar_compra(lista_clientes, lista_produtos, lista_vendas):
         quantidade = validar_numero()
         feita= -quantidade
         produto.ajuste(feita)
-        item = {"id": produto.id, "nome": produto.nome, "preço": produto.preco, "quantidade": quantidade} 
+        item = {"id": produto.id, "produto": produto.nome, "preço unitario": produto.preco, "quantidade": quantidade} 
         itens_compra.append(item)
         total_compra += quantidade * produto.preco
         continuar = input("Deseja adicionar outro item? (sim/não): ").strip().lower()
         if continuar != 'sim':
             break
     # 4. Adicionamos na lista de vendas que o main gerencia
-    lista_compra={"cliente": cliente['nome'], "cpf": cpf, "itens": itens_compra, "total": total_compra}
+    lista_compra={"cliente": cliente.nome, "cpf": cpf, "itens": itens_compra, "total": total_compra}
     lista_vendas.append(lista_compra)
     print(f"Compra finalizada! Total: R${total_compra:.2f}")

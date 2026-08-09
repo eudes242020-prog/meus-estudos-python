@@ -1,6 +1,6 @@
 import json
 from utils import pausa_e_limpar
-from produtos import pegar_string, pegar_int, validar_nome
+from produtos import pegar_string
 def validar_cpf(cpf):
     if not cpf:
         return None
