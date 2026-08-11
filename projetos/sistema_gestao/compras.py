@@ -1,3 +1,4 @@
+import datetime
 from produtos import ver_produtos, validar_numero
 def selecionar_produto(lista_produtos):
     ver_produtos()
@@ -32,3 +33,9 @@ def registrar_compra(login, lista_produtos, lista_vendas):
     lista_compra={"cliente": cliente.nome, "cpf": cliente.cpf, "itens": itens_compra, "total": total_compra}
     lista_vendas.append(lista_compra)
     print(f"Compra finalizada! Total: R${total_compra:.2f}")
+class Venda:
+    def __init__(self, cliente, produtos,valor_total):
+        self.cliente=cliente
+        self.produtos=produtos
+        self.valor_total=valor_total
+        self.data = datetime.datetime.now()

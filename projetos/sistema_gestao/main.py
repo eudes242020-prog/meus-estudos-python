@@ -1,7 +1,7 @@
 from banco_dados import produtos, vendas,admins
 from produtos import cadastro_produto, ver_produtos 
 from cadastro_clientes import ver_clientes, cadastro_completo, salvar_dados, carregar_dados
-from compras import registrar_compra
+from compras import registrar_compra,Venda
 from utils import pausa_e_limpar
 from relatorios import listar_vendas, vendas_por_cliente, total_gasto_por_cliente
 from admin import validar_admin, validar_senha,criar_admin,validar_admin,codigo_admin
