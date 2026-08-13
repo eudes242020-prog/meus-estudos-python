@@ -78,13 +78,13 @@ def executar_sistema():
                         ver_clientes(clientes)
                         input('\nPressione ENTER para voltar...')
                     elif escolha_admin == 5:
-                        listar_vendas()
+                        listar_vendas(vendas)
                         input('\nPressione ENTER para voltar...')
                     elif escolha_admin == 6:
-                        vendas_por_cliente()
+                        vendas_por_cliente(vendas)
                         input('\nPressione ENTER para voltar...')
                     elif escolha_admin == 7:
-                        total_gasto_por_cliente()
+                        total_gasto_por_cliente(vendas)
                         input('\nPressione ENTER para voltar...')
                     pausa_e_limpar()
         elif decisao == 2:  # CLIENTE

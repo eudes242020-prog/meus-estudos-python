@@ -30,12 +30,13 @@ def registrar_compra(login, lista_produtos, lista_vendas):
         if continuar != 'sim':
             break
     # 4. Adicionamos na lista de vendas que o main gerencia
-    lista_compra={"cliente": cliente.nome, "cpf": cliente.cpf, "itens": itens_compra, "total": total_compra}
-    lista_vendas.append(lista_compra)
-    print(f"Compra finalizada! Total: R${total_compra:.2f}")
+    venda=Venda(cliente= cliente, produtos= itens_compra,  valor_total= total_compra)
+    lista_vendas.append(venda)
+    print(f"Compra finalizada! Total: R${venda.valor_total}")
 class Venda:
     def __init__(self, cliente, produtos,valor_total):
         self.cliente=cliente
         self.produtos=produtos
         self.valor_total=valor_total
         self.data = datetime.datetime.now()
+    
