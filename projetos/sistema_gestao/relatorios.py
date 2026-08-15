@@ -25,7 +25,7 @@ def vendas_por_cliente(itens):
             encontrou = True
             print(f"\nCliente: {venda.cliente.nome}")
             print(f"CPF: {venda.cliente.cpf}")
-            if not itens:
+            if not venda.produtos:
                 print("Cliente não tem compras!")
             else:
                 print("Itens comprados:")
