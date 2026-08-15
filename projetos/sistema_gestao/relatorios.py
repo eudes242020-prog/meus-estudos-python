@@ -34,7 +34,7 @@ def vendas_por_cliente(itens):
             print("-" * 40)
     if not encontrou:
         print("Nenhuma compra encontrada para este CPF.")
-def total_gasto_por_cliente():
+def total_gasto_por_cliente(vendas):
     if not vendas:
         print('Não existe vendas a serem exibidas!')
         return
@@ -43,7 +43,10 @@ def total_gasto_por_cliente():
         cpf = venda.cliente.cpf  
         for item in venda.produtos:
             total_item = item['quantidade'] * item['preço unitario']
-            totais_por_cliente[cpf] += total_item
+            if cpf in totais_por_cliente:
+                totais_por_cliente[cpf] += total_item
+            else:
+                totais_por_cliente[cpf] = total_item
     # Mostrar os resultados
     for cpf, total in totais_por_cliente.items():
         print(f"CPF: {cpf} | Total gasto: R${total:.2f}")

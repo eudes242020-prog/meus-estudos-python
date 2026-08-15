@@ -1,6 +1,8 @@
 import json
+import os
 from utils import pausa_e_limpar
 from produtos import pegar_string
+CAMINHO_CONFIG = os.path.join(os.path.dirname(os.path.abspath(__file__)), "config.json")
 def validar_cpf(cpf):
     if not cpf:
         return None
@@ -169,7 +171,7 @@ def ver_clientes(lista_para_exibir):
 def salvar_dados(lista_clientes):
     try:
         nova_lista=[]
-        with open("config.json", "w", encoding='utf-8') as arquivo:
+        with open(CAMINHO_CONFIG, "w", encoding='utf-8') as arquivo:
             for cliente in lista_clientes:
                 clientes={"nome": cliente.nome, "cpf": cliente.cpf, "senha": cliente.senha, "email": cliente.email }
                 nova_lista.append(clientes)
@@ -181,7 +183,7 @@ def salvar_dados(lista_clientes):
 def carregar_dados():
     try:
         nova_lista=[]
-        with open ("config.json", 'r',) as arquivo:
+        with open (CAMINHO_CONFIG, 'r',) as arquivo:
             dados=json.load(arquivo)
         for cliente in dados:
             novo=Cliente(nome=cliente["nome"], cpf=cliente['cpf'], senha=cliente["senha"], email=cliente["email"])
