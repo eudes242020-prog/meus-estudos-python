@@ -17,9 +17,15 @@ def listar_vendas(vendas):
                 print(f" - {item['produto']} | Quantidade: {item['quantidade']} | Preço unitário: R${item['preço unitario']:.2f}")
         print(f"Total da compra: R${venda.valor_total}")
         print("-" * 40)
-def vendas_por_cliente(itens):
+def vendas_por_cliente(itens,clientes):
     cpf = cpf_cadastro()
+    cadastro=False
     encontrou = False
+    if clientes:
+        for pessoa in clientes:
+            if pessoa.cpf==cpf:
+                cadastro=True
+                break
     for venda in itens:
         if venda.cliente.cpf == cpf:
             encontrou = True
@@ -32,8 +38,13 @@ def vendas_por_cliente(itens):
                 for item in venda.produtos:
                     print(f"Produto:  {item['produto']} | Quantidade: {item['quantidade']}| Preço unitario: R${item['preço unitario']:.2f}")
             print("-" * 40)
-    if not encontrou:
-        print("Nenhuma compra encontrada para este CPF.")
+    if not cadastro:
+        print("Cliente não cadastrado.")
+    else:
+        if encontrou:
+            pass
+        else:
+            print("Cliente não tem compras!")
 def total_gasto_por_cliente(vendas):
     if not vendas:
         print('Não existe vendas a serem exibidas!')

@@ -81,7 +81,7 @@ def executar_sistema():
                         listar_vendas(vendas)
                         input('\nPressione ENTER para voltar...')
                     elif escolha_admin == 6:
-                        vendas_por_cliente(vendas)
+                        vendas_por_cliente(vendas,clientes)
                         input('\nPressione ENTER para voltar...')
                     elif escolha_admin == 7:
                         total_gasto_por_cliente(vendas)
