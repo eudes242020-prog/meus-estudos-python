@@ -61,3 +61,18 @@ def total_gasto_por_cliente(vendas):
     # Mostrar os resultados
     for cpf, total in totais_por_cliente.items():
         print(f"CPF: {cpf} | Total gasto: R${total:.2f}")
+def clientes_sem_compra(compras,clientes):
+    nova_lista=[]
+    for cliente in clientes:
+        possui_compra = False
+        for compra in compras:
+            if cliente.cpf==compra.cliente.cpf:
+                possui_compra=True
+                break
+        if not possui_compra:
+            nova_lista.append(cliente)
+    if not nova_lista:
+        print('Não existe cliente sem compras')
+        return
+    for novo in nova_lista:
+        print(novo)

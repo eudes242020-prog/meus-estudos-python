@@ -3,7 +3,7 @@ from produtos import cadastro_produto, ver_produtos
 from cadastro_clientes import ver_clientes, cadastro_completo, salvar_dados, carregar_dados
 from compras import registrar_compra,Venda
 from utils import pausa_e_limpar
-from relatorios import listar_vendas, vendas_por_cliente, total_gasto_por_cliente
+from relatorios import listar_vendas, vendas_por_cliente, total_gasto_por_cliente,clientes_sem_compra
 from admin import validar_admin, validar_senha,criar_admin,validar_admin,codigo_admin
 from login import login_admin,login_cliente
 menu_administrador = {
@@ -14,6 +14,7 @@ menu_administrador = {
     5: "Relatório de Vendas",
     6: "Vendas por Cliente",
     7: 'Total Gasto por Cliente',
+    8: 'Cliente que nunca compraram',
     0: "Voltar"
 }
 adm_cliente ={
@@ -85,6 +86,9 @@ def executar_sistema():
                         input('\nPressione ENTER para voltar...')
                     elif escolha_admin == 7:
                         total_gasto_por_cliente(vendas)
+                        input('\nPressione ENTER para voltar...')
+                    elif escolha_admin == 8:
+                        clientes_sem_compra(vendas,clientes)
                         input('\nPressione ENTER para voltar...')
                     pausa_e_limpar()
         elif decisao == 2:  # CLIENTE
