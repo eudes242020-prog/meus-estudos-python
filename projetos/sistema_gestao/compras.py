@@ -1,7 +1,7 @@
 import datetime
 from produtos import ver_produtos, validar_numero
 def selecionar_produto(lista_produtos):
-    ver_produtos()
+    ver_produtos(lista_produtos)
     compra=input('Qual produto deseja comprar(nome/id): ').strip().lower()
     for produto in lista_produtos:
         if produto.nome.lower() ==compra or str(produto.id)== compra:
@@ -33,6 +33,7 @@ def registrar_compra(login, lista_produtos, lista_vendas):
     venda=Venda(cliente= cliente, produtos= itens_compra,  valor_total= total_compra)
     lista_vendas.append(venda)
     print(f"Compra finalizada! Total: R${venda.valor_total:.2f}")
+    return venda
 class Venda:
     def __init__(self, cliente, produtos,valor_total):
         self.cliente=cliente

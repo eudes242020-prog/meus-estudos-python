@@ -1,4 +1,3 @@
-from banco_dados import produtos
 from utils import pausa_e_limpar
 class Produto:
     def __init__(self, id, nome, preco, estoque):
@@ -22,12 +21,12 @@ def validar_nome():
         if nome and len(nome) >= 2:
             return nome
         print('Nome não é valido')
-def codigo_produto():
-    if not produtos:
+def codigo_produto(lista):
+    if not lista:
         id=1
         return id
     else:
-        ids = [item.id for item in produtos]
+        ids = [item.id for item in lista]
         return max(ids)+1
 def pegar_int(mensagem):
     numero=input(mensagem)
@@ -94,15 +93,15 @@ def cadastro_produto(lista_produtos):
         if produto.nome == nome and produto.preco == preco:
             produto.ajuste(ajuste_estoque())
             return None
-    id = codigo_produto()
+    id = codigo_produto(lista_produtos)
     quantidade = quantidade_estoque()
     cadastro_novo = Produto(id=id, nome= nome,  preco= preco, estoque = quantidade)
     print(f"Produto {nome} cadastrado com sucesso!")
     return cadastro_novo # Devolve a "peça" pronta para o main
-def ver_produtos():
-    if not produtos:
+def ver_produtos(lista):
+    if not lista:
         print("Nenhum produto cadastrado.")
     else:
         print("\n--- Produtos Cadastrados ---")
-        for produto in produtos:
+        for produto in lista:
             print(produto)
