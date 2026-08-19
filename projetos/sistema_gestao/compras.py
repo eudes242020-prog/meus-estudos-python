@@ -22,7 +22,10 @@ def registrar_compra(login, lista_produtos, lista_vendas):
             continue
         quantidade = validar_numero()
         feita= -quantidade
-        produto.ajuste(feita)
+        ajuste=produto.ajuste(feita)
+        if ajuste is not None:
+            print('Estoque não pode ficar negativo')
+            continue
         item = {"id": produto.id, "produto": produto.nome, "preço unitario": produto.preco, "quantidade": quantidade} 
         itens_compra.append(item)
         total_compra += quantidade * produto.preco
