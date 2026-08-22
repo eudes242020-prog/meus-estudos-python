@@ -46,3 +46,15 @@ def compras_produtos(id ,compra):
         return 'Não existe esse id'
     conexao.commit()
     conexao.close()
+def ajuste_de_estoque(produto):
+    try:
+        conexao=conexao_api()
+        item=conexao.cursor()
+        item.execute('UPDATE produtos SET estoque = ? WHERE id = ?', (produto.estoque,produto.id,))
+        verificar=item.rowcount
+        if verificar == 0:
+            return 'Não existe esse id'
+        conexao.commit()
+        return 'Estoque ajustado'
+    finally:
+        conexao.close()

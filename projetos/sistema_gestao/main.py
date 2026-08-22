@@ -1,5 +1,5 @@
-from banco_dados import vendas,admins,criar_tabela,salvar_produtos,carregar_produtos,compras_produtos
-from produtos import cadastro_produto, ver_produtos 
+from banco_dados import vendas,admins,criar_tabela,salvar_produtos,carregar_produtos,compras_produtos,ajuste_de_estoque
+from produtos import cadastro_produto, ver_produtos, ajuste_produto
 from cadastro_clientes import ver_clientes, cadastro_completo, salvar_dados, carregar_dados
 from compras import registrar_compra,Venda
 from utils import pausa_e_limpar
@@ -15,6 +15,7 @@ menu_administrador = {
     6: "Vendas por Cliente",
     7: 'Total Gasto por Cliente',
     8: 'Cliente que nunca compraram',
+    9: 'Ajuste de estoque',
     0: "Voltar"
 }
 adm_cliente ={
@@ -91,6 +92,12 @@ def executar_sistema():
                     elif escolha_admin == 8:
                         clientes_sem_compra(vendas,clientes)
                         input('\nPressione ENTER para voltar...')
+                    elif escolha_admin == 9:
+                        ajuste=ajuste_produto(carregar_produtos())
+                        if ajuste is not None:
+                            ajuste_de_estoque(ajuste)
+                            print('Produto ajustado')
+                        input('\nPressione ENTER para voltar...')
                     pausa_e_limpar()
         elif decisao == 2:  # CLIENTE
             while True:
@@ -111,7 +118,7 @@ def executar_sistema():
                             break
                         for v in venda.produtos:
                             compras_produtos(v['id'],v['quantidade'])
-                        
+             
                 pausa_e_limpar()                  
         else:
             print('Opção invalida')

@@ -98,10 +98,28 @@ def cadastro_produto(lista_produtos):
     cadastro_novo = Produto(id=id, nome= nome,  preco= preco, estoque = quantidade)
     print(f"Produto {nome} cadastrado com sucesso!")
     return cadastro_novo # Devolve a "peça" pronta para o main
-def ver_produtos(lista):
-    if not lista:
+def ver_produtos(lista_produtos):
+    if not lista_produtos:
         print("Nenhum produto cadastrado.")
     else:
         print("\n--- Produtos Cadastrados ---")
-        for produto in lista:
+        for produto in lista_produtos:
             print(produto)
+def ajuste_produto(lista_produtos):
+    if not lista_produtos:
+        return None
+    ver_produtos(lista_produtos)
+    try:
+        id=int(pegar_int('Qual ID do produto quer ajustar: '))
+        for produto in lista_produtos:
+            if produto.id==id:
+                ajuste=produto.ajuste(ajuste_estoque())
+                if ajuste is None:
+                    return produto
+                print('Estoque não pode ficar negativo')
+                return
+        print('ID não existe')
+        return None
+    except ValueError:
+        print('ERROR: Apenas números pode ser digitado!')
+        return None
