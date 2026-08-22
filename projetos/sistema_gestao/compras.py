@@ -10,6 +10,8 @@ def selecionar_produto(lista_produtos):
     return None
 def registrar_compra(login, lista_produtos, lista_vendas):
     # 1. Passamos a lista para buscar o cliente real na memória
+    if not lista_produtos:
+        return None
     cliente = login
     if cliente is None:
         return None# Sai da função se o usuário desistir
@@ -18,8 +20,11 @@ def registrar_compra(login, lista_produtos, lista_vendas):
     while True:
         # 2. Passamos a lista de produtos para seleção
         produto = selecionar_produto(lista_produtos) 
-        if not produto:
-            continue
+        if produto is None:
+            sair=input('Aperte [0] para sair da compra: ')
+            if sair !='0':
+                continue
+            break
         quantidade = validar_numero()
         feita= -quantidade
         ajuste=produto.ajuste(feita)
@@ -33,6 +38,8 @@ def registrar_compra(login, lista_produtos, lista_vendas):
         if continuar != 'sim':
             break
     # 4. Adicionamos na lista de vendas que o main gerencia
+    if not itens_compra:
+        return None
     venda=Venda(cliente= cliente, produtos= itens_compra,  valor_total= total_compra)
     lista_vendas.append(venda)
     print(f"Compra finalizada! Total: R${venda.valor_total:.2f}")

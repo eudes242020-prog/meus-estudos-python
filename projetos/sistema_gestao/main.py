@@ -107,6 +107,8 @@ def executar_sistema():
                     login=login_cliente()
                     if login is not None:
                         venda=registrar_compra(login, carregar_produtos(), vendas)
+                        if venda is None:
+                            break
                         for v in venda.produtos:
                             compras_produtos(v['id'],v['quantidade'])
                         
