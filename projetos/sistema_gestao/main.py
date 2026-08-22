@@ -10,12 +10,12 @@ menu_administrador = {
     1: "Criar ADMINISTRADOR",
     2: "Cadastrar produto",
     3: "Ver produtos cadastrados",
-    4: "Ver clientes cadastrados",
-    5: "Relatório de Vendas",
-    6: "Vendas por Cliente",
-    7: 'Total Gasto por Cliente',
-    8: 'Cliente que nunca compraram',
-    9: 'Ajuste de estoque',
+    4: 'Ajuste de estoque',
+    5: "Ver clientes cadastrados",
+    6: "Relatório de Vendas",
+    7: "Vendas por Cliente",
+    8: 'Total Gasto por Cliente',
+    9: 'Cliente que nunca compraram',
     0: "Voltar"
 }
 adm_cliente ={
@@ -78,25 +78,25 @@ def executar_sistema():
                         ver_produtos(carregar_produtos())
                         input('\nPressione ENTER para voltar...')
                     elif escolha_admin == 4:
-                        ver_clientes(clientes)
-                        input('\nPressione ENTER para voltar...')
-                    elif escolha_admin == 5:
-                        listar_vendas(vendas)
-                        input('\nPressione ENTER para voltar...')
-                    elif escolha_admin == 6:
-                        vendas_por_cliente(vendas,clientes)
-                        input('\nPressione ENTER para voltar...')
-                    elif escolha_admin == 7:
-                        total_gasto_por_cliente(vendas)
-                        input('\nPressione ENTER para voltar...')
-                    elif escolha_admin == 8:
-                        clientes_sem_compra(vendas,clientes)
-                        input('\nPressione ENTER para voltar...')
-                    elif escolha_admin == 9:
                         ajuste=ajuste_produto(carregar_produtos())
                         if ajuste is not None:
                             ajuste_de_estoque(ajuste)
                             print('Produto ajustado')
+                        input('\nPressione ENTER para voltar...')
+                    elif escolha_admin == 5:
+                        ver_clientes(clientes)
+                        input('\nPressione ENTER para voltar...')
+                    elif escolha_admin == 6:
+                        listar_vendas(vendas)
+                        input('\nPressione ENTER para voltar...')
+                    elif escolha_admin == 7:
+                        vendas_por_cliente(vendas,clientes)
+                        input('\nPressione ENTER para voltar...')
+                    elif escolha_admin == 8:
+                        total_gasto_por_cliente(vendas)
+                        input('\nPressione ENTER para voltar...')
+                    elif escolha_admin == 9:
+                        clientes_sem_compra(vendas,clientes)
                         input('\nPressione ENTER para voltar...')
                     pausa_e_limpar()
         elif decisao == 2:  # CLIENTE
