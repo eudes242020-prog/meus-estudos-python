@@ -88,11 +88,6 @@ def ajuste_estoque():
 def cadastro_produto(lista_produtos):
     nome = validar_nome()
     preco = validar_preco()
-    # Item de segurança: verifica se o item já está nas "prateleiras"
-    for produto in lista_produtos:
-        if produto.nome == nome and produto.preco == preco:
-            produto.ajuste(ajuste_estoque())
-            return None
     id = codigo_produto(lista_produtos)
     quantidade = quantidade_estoque()
     cadastro_novo = Produto(id=id, nome= nome,  preco= preco, estoque = quantidade)

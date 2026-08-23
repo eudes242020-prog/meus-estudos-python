@@ -70,10 +70,8 @@ def executar_sistema():
                         criar_admin(admins)
                     elif escolha_admin == 2:
                         produto=cadastro_produto(carregar_produtos())
-                        if produto is not None:
-                            salvar_produtos(produto)
-                        else:
-                            print("Produto ajustado")
+                        salvar_produtos(produto)
+                        input('\nPressione ENTER para voltar...')
                     elif escolha_admin == 3:
                         ver_produtos(carregar_produtos())
                         input('\nPressione ENTER para voltar...')
