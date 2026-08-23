@@ -58,3 +58,15 @@ def ajuste_de_estoque(produto):
         return 'Estoque ajustado'
     finally:
         conexao.close()
+def apagar_produto(produto):
+    try:
+        conexao=conexao_api()
+        item=conexao.cursor()
+        item.execute('DELETE FROM produtos WHERE id = ?',(produto.id,))
+        verificar=item.rowcount
+        if verificar == 0:
+            return 'Não existe esse id'
+        conexao.commit()
+        return 'Produto removido'
+    finally:
+        conexao.close()

@@ -31,6 +31,13 @@ def codigo_produto(lista):
 def pegar_int(mensagem):
     numero=input(mensagem)
     return numero
+def tratar_int(num):
+    while True:
+        try:
+            numero=int(num)
+            return numero
+        except ValueError:
+            print('Precisa digitar número')
 def validar_numero():
     while True:
         try:
@@ -118,3 +125,14 @@ def ajuste_produto(lista_produtos):
     except ValueError:
         print('ERROR: Apenas números pode ser digitado!')
         return None
+def remover_produto(lista_produtos):
+    if not lista_produtos:
+        return None
+    ver_produtos(lista_produtos)
+    print('PARA EXCLUIR O PRODUTO ')
+    escolha=tratar_int(pegar_int('Escolha o id: '))
+    for produto in lista_produtos:
+        if produto.id==escolha:
+            return produto
+    print('ID do produto não existe')
+    return None

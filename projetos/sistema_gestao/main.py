@@ -1,5 +1,5 @@
-from banco_dados import vendas,admins,criar_tabela,salvar_produtos,carregar_produtos,compras_produtos,ajuste_de_estoque
-from produtos import cadastro_produto, ver_produtos, ajuste_produto
+from banco_dados import vendas,admins,criar_tabela,salvar_produtos,carregar_produtos,compras_produtos,ajuste_de_estoque,apagar_produto
+from produtos import cadastro_produto, ver_produtos, ajuste_produto, remover_produto
 from cadastro_clientes import ver_clientes, cadastro_completo, salvar_dados, carregar_dados
 from compras import registrar_compra,Venda
 from utils import pausa_e_limpar
@@ -10,7 +10,7 @@ menu_administrador = {
     1: "Criar ADMINISTRADOR",
     2: "Cadastrar produto",
     3: "Ver produtos cadastrados",
-    4: 'Ajuste de estoque',
+    4: 'Gerenciar produto',
     5: "Ver clientes cadastrados",
     6: "Relatório de Vendas",
     7: "Vendas por Cliente",
@@ -76,10 +76,19 @@ def executar_sistema():
                         ver_produtos(carregar_produtos())
                         input('\nPressione ENTER para voltar...')
                     elif escolha_admin == 4:
-                        ajuste=ajuste_produto(carregar_produtos())
-                        if ajuste is not None:
-                            ajuste_de_estoque(ajuste)
-                            print('Produto ajustado')
+                        print('[1] para ajustar estoque')
+                        print('[2] para apagar do estoque')
+                        p=obter_escolha()
+                        if p == 1:
+                            ajuste=ajuste_produto(carregar_produtos())
+                            if ajuste is not None:
+                                ajuste_de_estoque(ajuste)
+                                print('Produto ajustado')
+                        elif p == 2:
+                            remover=remover_produto(carregar_produtos())
+                            if remover is not None:
+                                apagar_produto(remover)
+                                print('PRODUTO REMOVIDO')
                         input('\nPressione ENTER para voltar...')
                     elif escolha_admin == 5:
                         ver_clientes(clientes)
