@@ -1,4 +1,4 @@
-from banco_dados import vendas,admins,criar_tabela,salvar_produtos,carregar_produtos,compras_produtos,ajuste_de_estoque,apagar_produto
+from banco_dados import vendas,admins,criar_tabela_produto,salvar_produtos,carregar_produtos,compras_produtos,ajuste_de_estoque,apagar_produto,criar_tabela_venda,criar_tabela_itens
 from produtos import cadastro_produto, ver_produtos, ajuste_produto, remover_produto
 from cadastro_clientes import ver_clientes, cadastro_completo, salvar_dados, carregar_dados
 from compras import registrar_compra,Venda
@@ -48,7 +48,9 @@ def obter_escolha():
         print("Entrada inválida! Digite um número inteiro.")
         return None
 def executar_sistema():
-    criar_tabela()
+    criar_tabela_produto()
+    criar_tabela_itens()
+    criar_tabela_venda()
     clientes = carregar_dados()
     if not admins:
         criar_admin(admins)

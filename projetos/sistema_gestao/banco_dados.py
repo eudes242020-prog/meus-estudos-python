@@ -9,7 +9,7 @@ admins=[]
 def conexao_api():
     criar=sqlite3.connect('banco_sistema_gestao.db')
     return criar
-def criar_tabela():
+def criar_tabela_produto():
     conexao=conexao_api()
     item=conexao.cursor()
     item.execute("""CREATE TABLE IF NOT EXISTS produtos(
@@ -18,6 +18,29 @@ def criar_tabela():
     preco INTEGER,
     estoque INTEGER
     )""")
+    conexao.commit()
+    conexao.close()
+def criar_tabela_venda():
+    conexao=conexao_api()
+    item=conexao.cursor()
+    item.execute('''CREATE TABLE IF NOT EXISTS vendas(
+    id INTEGER PRIMARY KEY,
+    cpf TEXT,
+    valor_total INTEGER,
+    data TEXT
+    )''')
+    conexao.commit()
+    conexao.close()
+def criar_tabela_itens():
+    conexao=conexao_api()
+    item=conexao.cursor()
+    item.execute('''CREATE TABLE IF NOT EXISTS itens_vendas(
+    id INTEGER PRIMARY KEY,
+    venda_id INTEGER,
+    produto TEXT,
+    preco INTEGER,
+    quantidade INTEGER
+    )''')
     conexao.commit()
     conexao.close()
 def salvar_produtos(produto):
@@ -68,5 +91,21 @@ def apagar_produto(produto):
             return 'Não existe esse id'
         conexao.commit()
         return 'Produto removido'
+    finally:
+        conexao.close()
+def apagar_tabela():
+    try:
+        conexao=conexao_api()
+        item=conexao.cursor()
+        item.execute('DROP TABLE itens_vendas')
+        conexao.commit()
+    finally:
+        conexao.close()
+def apagar_tabela1():
+    try:
+        conexao=conexao_api()
+        item=conexao.cursor()
+        item.execute('DROP TABLE vendas')
+        conexao.commit()
     finally:
         conexao.close()
