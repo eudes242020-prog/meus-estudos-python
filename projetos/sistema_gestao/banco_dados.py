@@ -5,7 +5,6 @@ lista_para_exibir = [
     {'nome': 'João Silva', 'cpf': '12345678900', 'email': 'joao@email.com'},
     {'nome': 'Maria Souza', 'cpf': '98765432100', 'email': 'maria@email.com'}
 ]
-vendas = []
 admins=[]
 def conexao_api():
     criar=sqlite3.connect('banco_sistema_gestao.db')
@@ -117,8 +116,8 @@ def carregar_venda(clientes):
     for venda in vendas:
         for cliente in clientes:
             if venda[1]==cliente.cpf:
-                lista.append(Venda(cliente,))
-    
+                lista.append(Venda(cliente,carregar_itens_venda(venda[0]) , venda[2]))
+    return lista
 #faz parte da tabela itens_venda
 def salvar_itens_venda(produto,ident):
     conexao=conexao_api()
@@ -127,3 +126,13 @@ def salvar_itens_venda(produto,ident):
         item.execute('INSERT INTO itens_vendas (venda_id, produto, preco, quantidade) VALUES (?, ?, ?, ?)',(ident,cada['produto'],cada["preço unitario"], cada['quantidade']))
     conexao.commit()
     conexao.close()
+def carregar_itens_venda(ident):
+    conexao=conexao_api()
+    item=conexao.cursor()
+    item.execute('SELECT * FROM itens_vendas WHERE venda_id = ?',(ident,))
+    vendas=item.fetchall()
+    lista=[]
+    for venda in vendas:
+        lista.append({"id" : venda[0],"venda_id": venda[1], "produto": venda[2], 'preço unitario': venda[3], "quantidade": venda[4]})
+    conexao.close()
+    return lista

@@ -1,7 +1,6 @@
-from banco_dados import vendas
 from utils import pausa_e_limpar
-from banco_dados import lista_para_exibir
-from cadastro_clientes import cpf_cadastro
+from banco_dados import carregar_venda
+from cadastro_clientes import cpf_cadastro,carregar_dados
 def listar_vendas(vendas):
     if not vendas:
         print("Nenhuma venda registrada.")

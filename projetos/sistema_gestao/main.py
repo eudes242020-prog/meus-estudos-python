@@ -1,4 +1,4 @@
-from banco_dados import vendas,admins,criar_tabela_produto,salvar_produtos,carregar_produtos,compras_produtos,ajuste_de_estoque,apagar_produto,criar_tabela_venda,criar_tabela_itens,salvar_itens_venda,salvar_venda
+from banco_dados import admins,criar_tabela_produto,salvar_produtos,carregar_produtos,compras_produtos,ajuste_de_estoque,apagar_produto,criar_tabela_venda,criar_tabela_itens,salvar_itens_venda,salvar_venda,carregar_venda
 from produtos import cadastro_produto, ver_produtos, ajuste_produto, remover_produto
 from cadastro_clientes import ver_clientes, cadastro_completo, salvar_dados, carregar_dados
 from compras import registrar_compra,Venda
@@ -96,16 +96,16 @@ def executar_sistema():
                         ver_clientes(clientes)
                         input('\nPressione ENTER para voltar...')
                     elif escolha_admin == 6:
-                        listar_vendas(vendas)
+                        listar_vendas(carregar_venda(clientes))
                         input('\nPressione ENTER para voltar...')
                     elif escolha_admin == 7:
-                        vendas_por_cliente(vendas,clientes)
+                        vendas_por_cliente(carregar_venda(clientes),clientes)
                         input('\nPressione ENTER para voltar...')
                     elif escolha_admin == 8:
-                        total_gasto_por_cliente(vendas)
+                        total_gasto_por_cliente(carregar_venda(clientes))
                         input('\nPressione ENTER para voltar...')
                     elif escolha_admin == 9:
-                        clientes_sem_compra(vendas,clientes)
+                        clientes_sem_compra(carregar_venda(clientes),clientes)
                         input('\nPressione ENTER para voltar...')
                     pausa_e_limpar()
         elif decisao == 2:  # CLIENTE
@@ -122,7 +122,7 @@ def executar_sistema():
                 elif escolha_cliente == 2:
                     login=login_cliente()
                     if login is not None:
-                        venda=registrar_compra(login, carregar_produtos(), vendas)
+                        venda=registrar_compra(login, carregar_produtos(), carregar_venda(clientes))
                         if venda is None:
                             break
                         for v in venda.produtos:
