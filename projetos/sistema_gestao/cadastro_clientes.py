@@ -183,7 +183,7 @@ def salvar_dados(lista_clientes):
 def carregar_dados():
     try:
         nova_lista=[]
-        with open (CAMINHO_CONFIG, 'r',) as arquivo:
+        with open (CAMINHO_CONFIG, 'r', encoding='utf-8') as arquivo:
             dados=json.load(arquivo)
         for cliente in dados:
             novo=Cliente(nome=cliente["nome"], cpf=cliente['cpf'], senha=cliente["senha"], email=cliente["email"])

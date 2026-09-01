@@ -38,6 +38,7 @@ def tratar_int(num):
             return numero
         except ValueError:
             print('Precisa digitar número')
+            num=pegar_int('Digite novamente: ')
 def validar_numero():
     while True:
         try:
