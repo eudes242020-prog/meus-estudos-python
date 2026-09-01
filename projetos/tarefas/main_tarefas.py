@@ -1,6 +1,6 @@
-from dados_tarefas import carregar_tarefas, salvar_tarefas
+from dados_tarefas import carregar_tarefas, salvar_tarefas, remover_tarefa, concluir_tarefa
 from mostrar_tarefas import ver_tarefas
-from tarefas import remover_tarefa, entrada_usuario,concluir_tarefa, entrada_numero, Tarefa
+from tarefas import entrada_usuario, entrada_numero, Tarefa
 menu={1: "Cadastra Tarefa", 2: "Remover Tarefa", 3: "Marcar tarefa como concluida", 4: "Listar Tarefas", 0: "Sair"}
 def opcoes_menu(menu):
     for chave,opcao in menu.items():
