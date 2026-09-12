@@ -1,14 +1,51 @@
 import sqlite3
 from produtos import Produto
 from compras import Venda
-lista_para_exibir = [
-    {'nome': 'João Silva', 'cpf': '12345678900', 'email': 'joao@email.com'},
-    {'nome': 'Maria Souza', 'cpf': '98765432100', 'email': 'maria@email.com'}
-]
+from cadastro_clientes import Cliente
 admins=[]
 def conexao_api():
     criar=sqlite3.connect('banco_sistema_gestao.db')
     return criar
+# tabela clientes
+def criar_tabela_cliente():
+    conexao=conexao_api()
+    item=conexao.cursor()
+    item.execute('''CREATE TABLE IF NOT EXISTS clientes(
+    cpf TEXT PRIMARY KEY,
+    nome TEXT,
+    senha TEXT,
+    email TEXT
+    )''')
+    conexao.commit()
+    conexao.close()
+def salvar_clientes(cliente):
+    conexao=conexao_api()
+    item=conexao.cursor()
+    item.execute('INSERT INTO clientes (cpf, nome, senha, email) VALUES (?, ?, ?, ?)', (cliente.cpf, cliente.nome, cliente.senha, cliente.email,))
+    conexao.commit()
+    conexao.close()
+def carregar_clientes():
+    conexao=conexao_api()
+    item=conexao.cursor()
+    item.execute('SELECT * FROM clientes')
+    receber=item.fetchall()
+    conexao.close()
+    lista=[]
+    for cliente in receber:
+        lista.append(Cliente(cliente[1], cliente[0], cliente[2], cliente[3]))
+    return lista
+def verificar_cliente(cliente):
+    try:
+        conexao=conexao_api()
+        item=conexao.cursor()
+        item.execute('SELECT cpf FROM clientes WHERE cpf = ?', (cliente,))
+        receber=item.fetchall()
+        if not receber:
+            return True
+        return None
+    finally:
+        conexao.commit()
+        conexao.close()    
 # tabela produtos
 def criar_tabela_produto():
     conexao=conexao_api()

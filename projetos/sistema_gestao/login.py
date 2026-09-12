@@ -1,8 +1,8 @@
 from admin import validar_admin, validar_senha,criar_admin,validar_admin,codigo_admin
 from produtos import pegar_string
 from utils import pausa_e_limpar
-from banco_dados import admins
-from cadastro_clientes import Cliente,carregar_dados,nome_cadastro,cpf_cadastro,senha_cliente,validar_cpf,email_cadastro,cpf_cadastro
+from banco_dados import carregar_clientes
+from cadastro_clientes import Cliente,nome_cadastro,cpf_cadastro,senha_cliente,validar_cpf,email_cadastro,cpf_cadastro
 def login_admin(lista):
     while True:
         logar=input("[1] Logar / [0] Voltar: ")
@@ -31,7 +31,7 @@ def login_cliente():
         if logar=="0":
             return None
         trava_senha=False
-        clientes=carregar_dados()
+        clientes=carregar_clientes()
         cpf=cpf_cadastro()
         for cliente in clientes:
             if cliente.cpf==cpf:

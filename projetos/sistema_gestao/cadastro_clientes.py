@@ -1,8 +1,5 @@
-import json
-import os
 from utils import pausa_e_limpar
 from produtos import pegar_string
-CAMINHO_CONFIG = os.path.join(os.path.dirname(os.path.abspath(__file__)), "config.json")
 def validar_cpf(cpf):
     if not cpf:
         return None
@@ -132,15 +129,11 @@ def email_cadastro():
             return email
         print('Email Invalido')
         pausa_e_limpar()
-def cadastro_completo(lista_atual):
+def cadastro_completo():
     while True:
         invalido=False
         nome=nome_cadastro()
         cpf=cpf_cadastro()
-        for cliente in lista_atual:
-            if cliente.cpf == cpf:
-                print("Erro: CPF já cadastrado!")
-                return None
         senha=senha_cliente()
         email=email_cadastro()
         novo_cadastro=Cliente(nome=nome, cpf=cpf, senha=senha, email=email)
@@ -168,26 +161,3 @@ def ver_clientes(lista_para_exibir):
         print("\n--- Clientes Cadastrados ---")
         for cliente in lista_para_exibir:
             print(f"Nome: {cliente.nome} - CPF: {cliente.cpf} - Email: {cliente.email}")
-def salvar_dados(lista_clientes):
-    try:
-        nova_lista=[]
-        with open(CAMINHO_CONFIG, "w", encoding='utf-8') as arquivo:
-            for cliente in lista_clientes:
-                clientes={"nome": cliente.nome, "cpf": cliente.cpf, "senha": cliente.senha, "email": cliente.email }
-                nova_lista.append(clientes)
-            json.dump(nova_lista, arquivo, indent=4, ensure_ascii=False)
-        print("Dados salvos com sucesso!")
-    except Exception as e:
-        print(f"Erro ao salvar dados: {e}")
-    return lista_clientes
-def carregar_dados():
-    try:
-        nova_lista=[]
-        with open (CAMINHO_CONFIG, 'r', encoding='utf-8') as arquivo:
-            dados=json.load(arquivo)
-        for cliente in dados:
-            novo=Cliente(nome=cliente["nome"], cpf=cliente['cpf'], senha=cliente["senha"], email=cliente["email"])
-            nova_lista.append(novo)
-        return nova_lista
-    except:
-        return []

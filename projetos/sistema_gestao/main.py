@@ -1,6 +1,6 @@
-from banco_dados import admins,criar_tabela_produto,salvar_produtos,carregar_produtos,compras_produtos,ajuste_de_estoque,apagar_produto,criar_tabela_venda,criar_tabela_itens,salvar_itens_venda,salvar_venda,carregar_venda
+from banco_dados import admins,criar_tabela_produto,salvar_produtos,carregar_produtos,compras_produtos,ajuste_de_estoque,apagar_produto,criar_tabela_venda,criar_tabela_itens,salvar_itens_venda,salvar_venda,carregar_venda,carregar_clientes,salvar_clientes,criar_tabela_cliente,verificar_cliente
 from produtos import cadastro_produto, ver_produtos, ajuste_produto, remover_produto
-from cadastro_clientes import ver_clientes, cadastro_completo, salvar_dados, carregar_dados
+from cadastro_clientes import ver_clientes, cadastro_completo
 from compras import registrar_compra,Venda
 from utils import pausa_e_limpar
 from relatorios import listar_vendas, vendas_por_cliente, total_gasto_por_cliente,clientes_sem_compra
@@ -51,7 +51,7 @@ def executar_sistema():
     criar_tabela_produto()
     criar_tabela_itens()
     criar_tabela_venda()
-    clientes = carregar_dados()
+    criar_tabela_cliente()
     if not admins:
         criar_admin(admins)
     while True:
@@ -93,19 +93,19 @@ def executar_sistema():
                                 print('PRODUTO REMOVIDO')
                         input('\nPressione ENTER para voltar...')
                     elif escolha_admin == 5:
-                        ver_clientes(clientes)
+                        ver_clientes(carregar_clientes())
                         input('\nPressione ENTER para voltar...')
                     elif escolha_admin == 6:
-                        listar_vendas(carregar_venda(clientes))
+                        listar_vendas(carregar_venda(carregar_clientes()))
                         input('\nPressione ENTER para voltar...')
                     elif escolha_admin == 7:
-                        vendas_por_cliente(carregar_venda(clientes),clientes)
+                        vendas_por_cliente(carregar_venda(carregar_clientes()),carregar_clientes())
                         input('\nPressione ENTER para voltar...')
                     elif escolha_admin == 8:
-                        total_gasto_por_cliente(carregar_venda(clientes))
+                        total_gasto_por_cliente(carregar_venda(carregar_clientes()))
                         input('\nPressione ENTER para voltar...')
                     elif escolha_admin == 9:
-                        clientes_sem_compra(carregar_venda(clientes),clientes)
+                        clientes_sem_compra(carregar_venda(carregar_clientes()),carregar_clientes())
                         input('\nPressione ENTER para voltar...')
                     pausa_e_limpar()
         elif decisao == 2:  # CLIENTE
@@ -115,14 +115,18 @@ def executar_sistema():
                 if escolha_cliente == 0:
                     break
                 elif escolha_cliente == 1:
-                    novo = cadastro_completo(clientes)
-                    if novo is not None: 
-                        clientes.append(novo)
-                        salvar_dados(clientes)
+                    novo = cadastro_completo()
+                    if novo is None:
+                        continue
+                    verificar=verificar_cliente(novo.cpf)
+                    if verificar is None:
+                        print("Erro: CPF já cadastrado!")
+                        continue
+                    salvar_clientes(novo)
                 elif escolha_cliente == 2:
                     login=login_cliente()
                     if login is not None:
-                        venda=registrar_compra(login, carregar_produtos(), carregar_venda(clientes))
+                        venda=registrar_compra(login, carregar_produtos(), carregar_venda(carregar_clientes()))
                         if venda is None:
                             break
                         for v in venda.produtos:
