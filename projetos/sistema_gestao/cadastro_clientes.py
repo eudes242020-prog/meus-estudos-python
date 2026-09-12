@@ -1,5 +1,6 @@
 from utils import pausa_e_limpar
 from produtos import pegar_string
+from hashlib import sha256
 def validar_cpf(cpf):
     if not cpf:
         return None
@@ -129,12 +130,16 @@ def email_cadastro():
             return email
         print('Email Invalido')
         pausa_e_limpar()
+def hash_senha(senha):
+    code=senha.encode('utf-8')
+    crip=sha256(code).hexdigest()
+    return crip
 def cadastro_completo():
     while True:
         invalido=False
         nome=nome_cadastro()
         cpf=cpf_cadastro()
-        senha=senha_cliente()
+        senha=hash_senha(senha_cliente())
         email=email_cadastro()
         novo_cadastro=Cliente(nome=nome, cpf=cpf, senha=senha, email=email)
         if novo_cadastro.nome is None or novo_cadastro.cpf is None or novo_cadastro.senha is None or novo_cadastro.email is None:
