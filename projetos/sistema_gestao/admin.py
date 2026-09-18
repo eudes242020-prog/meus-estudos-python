@@ -1,8 +1,8 @@
 from produtos import pegar_string
-from banco_dados import admins
 from utils import pausa_e_limpar
+from cadastro_clientes import hash_senha
 class Admin:
-    def __init__(self, id, nome, senha):
+    def __init__(self, nome, senha , id=None):
         self.id=id
         self.nome=nome
         self._senha=senha
@@ -26,13 +26,6 @@ def validar_admin():
             pausa_e_limpar()
             continue
         return admin
-def codigo_admin():
-    if not admins:
-        id=1
-        return id
-    else:
-        ids = [item.id for item in admins]
-        return max(ids)+1
 def validar_senha():
     while True:
         admin=pegar_string("Qual senha: ").strip()
@@ -45,9 +38,8 @@ def criar_admin(admins):
     while True:
         if not admins:
             nome=validar_admin()
-            id=codigo_admin()
-            senha=validar_senha()
-            adm=Admin(id=id,nome=nome,senha=senha)
+            senha=hash_senha(validar_senha())
+            adm=Admin(nome=nome,senha=senha)
             admins.append(adm)
             return adm
         else:
@@ -61,9 +53,8 @@ def criar_admin(admins):
                     break
             if trava:
                 continue
-            id=codigo_admin()
-            senha=validar_senha()
-            adm=Admin(id=id,nome=nome,senha=senha)
+            senha=hash_senha(validar_senha())
+            adm=Admin(nome=nome,senha=senha)
             admins.append(adm)
             print('Admin criado com sucesso')
             return adm

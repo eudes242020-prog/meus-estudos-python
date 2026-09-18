@@ -2,7 +2,7 @@ import sqlite3
 from produtos import Produto
 from compras import Venda
 from cadastro_clientes import Cliente
-admins=[]
+from admin import Admin
 def conexao_api():
     criar=sqlite3.connect('banco_sistema_gestao.db')
     return criar
@@ -173,3 +173,31 @@ def carregar_itens_venda(ident):
         lista.append({"id" : venda[0],"venda_id": venda[1], "produto": venda[2], 'preço unitario': venda[3], "quantidade": venda[4]})
     conexao.close()
     return lista
+def criar_tabela_admin():
+    conexao=conexao_api()
+    item=conexao.cursor()
+    item.execute('''CREATE TABLE IF NOT EXISTS admins(
+    id INTEGER PRIMARY KEY,
+    nome TEXT,
+    senha TEXT
+    )''')
+    conexao.commit()
+    conexao.close()
+def salvar_admin(admin):
+    conexao=conexao_api()
+    item=conexao.cursor()
+    item.execute('INSERT INTO admins (nome, senha) VALUES (?,?)',(admin.nome, admin.senha,))
+    conexao.commit()
+    conexao.close()
+def carregar_admin():
+    try:
+        conexao=conexao_api()
+        item=conexao.cursor()
+        item.execute('SELECT * FROM admins')
+        receber=item.fetchall()
+        lista=[]
+        for admin in receber:
+            lista.append(Admin(admin[1], admin[2], admin[0]))
+        return lista
+    finally:
+        conexao.close()

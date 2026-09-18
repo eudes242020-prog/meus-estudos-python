@@ -1,10 +1,10 @@
-from banco_dados import admins,criar_tabela_produto,salvar_produtos,carregar_produtos,compras_produtos,ajuste_de_estoque,apagar_produto,criar_tabela_venda,criar_tabela_itens,salvar_itens_venda,salvar_venda,carregar_venda,carregar_clientes,salvar_clientes,criar_tabela_cliente,verificar_cliente
+from banco_dados import criar_tabela_produto,salvar_produtos,carregar_produtos,compras_produtos,ajuste_de_estoque,apagar_produto,criar_tabela_venda,criar_tabela_itens,salvar_itens_venda,salvar_venda,carregar_venda,carregar_clientes,salvar_clientes,criar_tabela_cliente,verificar_cliente,criar_tabela_admin,salvar_admin,carregar_admin
 from produtos import cadastro_produto, ver_produtos, ajuste_produto, remover_produto
 from cadastro_clientes import ver_clientes, cadastro_completo
 from compras import registrar_compra,Venda
 from utils import pausa_e_limpar
 from relatorios import listar_vendas, vendas_por_cliente, total_gasto_por_cliente,clientes_sem_compra
-from admin import validar_admin, validar_senha,criar_admin,validar_admin,codigo_admin
+from admin import validar_senha,criar_admin,validar_admin
 from login import login_admin,login_cliente
 menu_administrador = {
     1: "Criar ADMINISTRADOR",
@@ -52,8 +52,9 @@ def executar_sistema():
     criar_tabela_itens()
     criar_tabela_venda()
     criar_tabela_cliente()
-    if not admins:
-        criar_admin(admins)
+    criar_tabela_admin()
+    if not carregar_admin():
+        salvar_admin(criar_admin(carregar_admin()))
     while True:
         primeiro_menu(adm_cliente)
         decisao = obter_escolha()
@@ -61,7 +62,7 @@ def executar_sistema():
             print("Saindo do programa!")
             break
         elif decisao == 1:  # ADMINISTRADOR
-            adm=login_admin(admins)
+            adm=login_admin(carregar_admin())
             if adm:
                 while True:
                     menu_adm(menu_administrador)
@@ -69,7 +70,7 @@ def executar_sistema():
                     if escolha_admin == 0:
                         break
                     elif escolha_admin == 1:
-                        criar_admin(admins)
+                        salvar_admin(criar_admin(carregar_admin()))
                     elif escolha_admin == 2:
                         produto=cadastro_produto(carregar_produtos())
                         salvar_produtos(produto)

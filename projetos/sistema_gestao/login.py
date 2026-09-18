@@ -1,4 +1,4 @@
-from admin import validar_admin, validar_senha,criar_admin,validar_admin,codigo_admin
+from admin import validar_senha,criar_admin,validar_admin
 from produtos import pegar_string
 from utils import pausa_e_limpar
 from banco_dados import carregar_clientes
@@ -12,7 +12,7 @@ def login_admin(lista):
         login=validar_admin()
         for adm in lista:
             if adm.nome==login:
-                senha=validar_senha()
+                senha=hash_senha(validar_senha())
                 if adm.senha==senha:
                     print('Acesso concedido!')
                     return True
