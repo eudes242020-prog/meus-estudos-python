@@ -203,10 +203,3 @@ def carregar_admin():
         return lista
     finally:
         conexao.close()
-def drop():
-    conexao=conexao_api()
-    item=conexao.cursor()
-    item.execute("DROP TABLE clientes")
-    conexao.commit()
-    conexao.close()
-drop()
