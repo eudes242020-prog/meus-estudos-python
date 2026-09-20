@@ -1,0 +1,7 @@
+__pycache__/
+*.json/
+.vscode/
+*.db
+*.mermaid
+*.svg
+TICKET*.md
