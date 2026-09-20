@@ -1,5 +1,4 @@
 from admin import validar_senha,criar_admin,validar_admin
-import secrets
 from produtos import pegar_string
 from utils import pausa_e_limpar
 from banco_dados import carregar_clientes
@@ -36,7 +35,7 @@ def login_cliente():
         cpf=cpf_cadastro()
         for cliente in clientes:
             if cliente.cpf==cpf:
-                senha=hash_senha(senha_cliente())
+                senha=hash_senha(cliente.salt+senha_cliente())
                 if cliente.senha==senha:
                     print('Acesso concedido')
                     return cliente
@@ -49,4 +48,3 @@ def login_cliente():
             continue
         print('Login não existe')
         pausa_e_limpar()
-                   

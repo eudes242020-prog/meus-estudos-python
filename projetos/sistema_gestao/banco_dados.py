@@ -14,14 +14,15 @@ def criar_tabela_cliente():
     cpf TEXT PRIMARY KEY,
     nome TEXT,
     senha TEXT,
-    email TEXT
+    email TEXT,
+    salt TEXT
     )''')
     conexao.commit()
     conexao.close()
 def salvar_clientes(cliente):
     conexao=conexao_api()
     item=conexao.cursor()
-    item.execute('INSERT INTO clientes (cpf, nome, senha, email) VALUES (?, ?, ?, ?)', (cliente.cpf, cliente.nome, cliente.senha, cliente.email,))
+    item.execute('INSERT INTO clientes (cpf, nome, senha, email, salt) VALUES (?, ?, ?, ?, ?)', (cliente.cpf, cliente.nome, cliente.senha, cliente.email, cliente.salt,))
     conexao.commit()
     conexao.close()
 def carregar_clientes():
@@ -32,7 +33,7 @@ def carregar_clientes():
     conexao.close()
     lista=[]
     for cliente in receber:
-        lista.append(Cliente(cliente[1], cliente[0], cliente[2], cliente[3]))
+        lista.append(Cliente(cliente[1], cliente[0], cliente[2], cliente[3],cliente[4]))
     return lista
 def verificar_cliente(cliente):
     try:
@@ -202,3 +203,10 @@ def carregar_admin():
         return lista
     finally:
         conexao.close()
+def drop():
+    conexao=conexao_api()
+    item=conexao.cursor()
+    item.execute("DROP TABLE clientes")
+    conexao.commit()
+    conexao.close()
+drop()

@@ -1,5 +1,6 @@
 from utils import pausa_e_limpar
 from produtos import pegar_string
+import secrets
 from hashlib import sha256
 def validar_cpf(cpf):
     if not cpf:
@@ -51,11 +52,12 @@ def verificar_email(email):
         return True
     return None
 class Cliente:
-    def __init__(self, nome, cpf, senha, email):
+    def __init__(self, nome, cpf, senha, email, salt):
         self.nome = nome
         self.cpf = cpf
         self.senha = senha
         self.email = email
+        self.salt = salt
     @property
     def nome(self):
         return self._nome      
@@ -136,12 +138,13 @@ def hash_senha(senha):
     return crip
 def cadastro_completo():
     while True:
+        saltado=secrets.token_hex(16)
         invalido=False
         nome=nome_cadastro()
         cpf=cpf_cadastro()
-        senha=hash_senha(senha_cliente())
+        senha=hash_senha(saltado+senha_cliente())
         email=email_cadastro()
-        novo_cadastro=Cliente(nome=nome, cpf=cpf, senha=senha, email=email)
+        novo_cadastro=Cliente(nome=nome, cpf=cpf, senha=senha, email=email, salt=saltado)
         if novo_cadastro.nome is None or novo_cadastro.cpf is None or novo_cadastro.senha is None or novo_cadastro.email is None:
             invalido=True
         if novo_cadastro.nome is None:
