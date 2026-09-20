@@ -179,14 +179,15 @@ def criar_tabela_admin():
     item.execute('''CREATE TABLE IF NOT EXISTS admins(
     id INTEGER PRIMARY KEY,
     nome TEXT,
-    senha TEXT
+    senha TEXT,
+    salt TEXT
     )''')
     conexao.commit()
     conexao.close()
 def salvar_admin(admin):
     conexao=conexao_api()
     item=conexao.cursor()
-    item.execute('INSERT INTO admins (nome, senha) VALUES (?,?)',(admin.nome, admin.senha,))
+    item.execute('INSERT INTO admins (nome, senha, salt) VALUES (?,?,?)',(admin.nome, admin.senha,admin.salt,))
     conexao.commit()
     conexao.close()
 def carregar_admin():
@@ -197,7 +198,7 @@ def carregar_admin():
         receber=item.fetchall()
         lista=[]
         for admin in receber:
-            lista.append(Admin(admin[1], admin[2], admin[0]))
+            lista.append(Admin(admin[1], admin[2],admin[3], admin[0]))
         return lista
     finally:
         conexao.close()

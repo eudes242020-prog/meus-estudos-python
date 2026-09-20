@@ -1,11 +1,13 @@
 from produtos import pegar_string
+import secrets
 from utils import pausa_e_limpar
 from cadastro_clientes import hash_senha
 class Admin:
-    def __init__(self, nome, senha , id=None):
+    def __init__(self, nome, senha ,salt, id=None):
         self.id=id
         self.nome=nome
         self._senha=senha
+        self.salt=salt
     @property
     def senha(self):
         return self._senha
@@ -36,10 +38,11 @@ def validar_senha():
         return admin
 def criar_admin(admins):
     while True:
+        saltado=secrets.token_hex(16)
         if not admins:
             nome=validar_admin()
-            senha=hash_senha(validar_senha())
-            adm=Admin(nome=nome,senha=senha)
+            senha=hash_senha(saltado+validar_senha())
+            adm=Admin(nome=nome,senha=senha,salt=saltado)
             admins.append(adm)
             return adm
         else:
@@ -53,8 +56,8 @@ def criar_admin(admins):
                     break
             if trava:
                 continue
-            senha=hash_senha(validar_senha())
-            adm=Admin(nome=nome,senha=senha)
+            senha=hash_senha(saltado+validar_senha())
+            adm=Admin(nome=nome,senha=senha,salt=saltado)
             admins.append(adm)
             print('Admin criado com sucesso')
             return adm
