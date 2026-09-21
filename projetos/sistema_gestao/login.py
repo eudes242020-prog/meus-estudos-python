@@ -2,7 +2,7 @@ from admin import validar_senha,criar_admin,validar_admin
 from produtos import pegar_string
 from utils import pausa_e_limpar
 from banco_dados import carregar_clientes
-from cadastro_clientes import Cliente,nome_cadastro,cpf_cadastro,senha_cliente,validar_cpf,email_cadastro,cpf_cadastro,hash_senha
+from cadastro_clientes import Cliente,nome_cadastro,cpf_cadastro,senha_cliente,validar_cpf,email_cadastro,cpf_cadastro,conferir_senha
 def login_admin(lista):
     while True:
         logar=input("[1] Logar / [0] Voltar: ")
@@ -12,8 +12,8 @@ def login_admin(lista):
         login=validar_admin()
         for adm in lista:
             if adm.nome==login:
-                senha=hash_senha(adm.salt+validar_senha())
-                if adm.senha==senha:
+                senha=validar_senha()
+                if conferir_senha(senha,adm.senha):
                     print('Acesso concedido!')
                     return True
                 else:
@@ -35,8 +35,8 @@ def login_cliente():
         cpf=cpf_cadastro()
         for cliente in clientes:
             if cliente.cpf==cpf:
-                senha=hash_senha(cliente.salt+senha_cliente())
-                if cliente.senha==senha:
+                senha=senha_cliente()
+                if conferir_senha(senha,cliente.senha):
                     print('Acesso concedido')
                     return cliente
                 else:

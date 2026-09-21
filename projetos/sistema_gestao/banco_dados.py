@@ -14,15 +14,14 @@ def criar_tabela_cliente():
     cpf TEXT PRIMARY KEY,
     nome TEXT,
     senha TEXT,
-    email TEXT,
-    salt TEXT
+    email TEXT
     )''')
     conexao.commit()
     conexao.close()
 def salvar_clientes(cliente):
     conexao=conexao_api()
     item=conexao.cursor()
-    item.execute('INSERT INTO clientes (cpf, nome, senha, email, salt) VALUES (?, ?, ?, ?, ?)', (cliente.cpf, cliente.nome, cliente.senha, cliente.email, cliente.salt,))
+    item.execute('INSERT INTO clientes (cpf, nome, senha, email) VALUES (?, ?, ?, ?)', (cliente.cpf, cliente.nome, cliente.senha, cliente.email,))
     conexao.commit()
     conexao.close()
 def carregar_clientes():
@@ -33,7 +32,7 @@ def carregar_clientes():
     conexao.close()
     lista=[]
     for cliente in receber:
-        lista.append(Cliente(cliente[1], cliente[0], cliente[2], cliente[3],cliente[4]))
+        lista.append(Cliente(cliente[1], cliente[0], cliente[2], cliente[3]))
     return lista
 def verificar_cliente(cliente):
     try:
@@ -180,15 +179,14 @@ def criar_tabela_admin():
     item.execute('''CREATE TABLE IF NOT EXISTS admins(
     id INTEGER PRIMARY KEY,
     nome TEXT,
-    senha TEXT,
-    salt TEXT
+    senha TEXT
     )''')
     conexao.commit()
     conexao.close()
 def salvar_admin(admin):
     conexao=conexao_api()
     item=conexao.cursor()
-    item.execute('INSERT INTO admins (nome, senha, salt) VALUES (?,?,?)',(admin.nome, admin.senha,admin.salt,))
+    item.execute('INSERT INTO admins (nome, senha) VALUES (?,?)',(admin.nome, admin.senha,))
     conexao.commit()
     conexao.close()
 def carregar_admin():
@@ -199,7 +197,7 @@ def carregar_admin():
         receber=item.fetchall()
         lista=[]
         for admin in receber:
-            lista.append(Admin(admin[1], admin[2],admin[3], admin[0]))
+            lista.append(Admin(admin[1], admin[2], admin[0]))
         return lista
     finally:
         conexao.close()
