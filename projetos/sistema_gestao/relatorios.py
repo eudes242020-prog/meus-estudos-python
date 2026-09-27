@@ -14,8 +14,8 @@ def listar_vendas(vendas):
         else:
             print("Itens comprados:")
             for item in venda.produtos:
-                print(f" - {item['produto']} | Quantidade: {item['quantidade']} | Preço unitário: R${item['preço unitario']:.2f}")
-        print(f"Total da compra: R${venda.valor_total}")
+                print(f" - {item['produto']} | Quantidade: {item['quantidade']} | Preço unitário: R${item['preço unitario']/100:.2f}")
+        print(f"Total da compra: R${venda.valor_total/100:.2f}")
         print("-" * 40)
 def vendas_por_cliente(itens,clientes):
     cpf = cpf_cadastro()
@@ -37,7 +37,7 @@ def vendas_por_cliente(itens,clientes):
             else:
                 print("Itens comprados:")
                 for item in venda.produtos:
-                    print(f"Produto:  {item['produto']} | Quantidade: {item['quantidade']}| Preço unitario: R${item['preço unitario']:.2f}")
+                    print(f"Produto:  {item['produto']} | Quantidade: {item['quantidade']}| Preço unitario: R${item['preço unitario']/100:.2f}")
             print("-" * 40)
     if not cadastro:
         print("Cliente não cadastrado.")
@@ -61,7 +61,7 @@ def total_gasto_por_cliente(vendas):
                 totais_por_cliente[cpf] = total_item
     # Mostrar os resultados
     for cpf, total in totais_por_cliente.items():
-        print(f"CPF: {cpf} | Total gasto: R${total:.2f}")
+        print(f"CPF: {cpf} | Total gasto: R${total/100:.2f}")
 def clientes_sem_compra(compras,clientes):
     nova_lista=[]
     for cliente in clientes:

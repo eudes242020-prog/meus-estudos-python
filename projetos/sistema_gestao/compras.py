@@ -42,7 +42,7 @@ def registrar_compra(login, lista_produtos, lista_vendas):
         return None
     venda=Venda(cliente= cliente, produtos= itens_compra,  valor_total= total_compra)
     lista_vendas.append(venda)
-    print(f"Compra finalizada! Total: R${venda.valor_total:.2f}")
+    print(f"Compra finalizada! Total: R${venda.valor_total/100:.2f}")
     return venda
 class Venda:
     def __init__(self, cliente, produtos,valor_total,data=None):

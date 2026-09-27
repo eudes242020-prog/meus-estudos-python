@@ -11,7 +11,7 @@ class Produto:
         self.estoque+=ajustar
         return
     def __str__(self):
-        return f'ID: {self.id} | Nome: {self.nome} | Preço: R${self.preco:.2f} | Estoque: {self.estoque}'
+        return f'ID: {self.id} | Nome: {self.nome} | Preço: R${self.preco/100:.2f} | Estoque: {self.estoque}'
 def pegar_string(mensagem):
     produto = input(mensagem).strip()
     return produto
@@ -56,10 +56,11 @@ def validar_preco():
         try:
             pausa_e_limpar()
             preco=float(pegar_int('Informe o valor do produto: '))
-            if preco<=0:
+            validado = round(preco*100)
+            if validado<=0:
                 print('Apenas números positivo para adicionar um preço')
                 continue
-            return preco
+            return validado
         except ValueError:
             print('Apenas números são permitidos')
             continue
