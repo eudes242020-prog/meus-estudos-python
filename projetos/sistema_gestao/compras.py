@@ -25,7 +25,7 @@ def registrar_compra(login, lista_produtos, lista_vendas):
             if sair !='0':
                 continue
             break
-        quantidade = validar_numero()
+        quantidade = validar_numero('Quantos deseja comprar: ')
         feita= -quantidade
         ajuste=produto.ajuste(feita)
         if ajuste is not None:

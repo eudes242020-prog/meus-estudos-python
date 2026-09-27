@@ -39,13 +39,13 @@ def tratar_int(num):
         except ValueError:
             print('Precisa digitar número')
             num=pegar_int('Digite novamente: ')
-def validar_numero():
+def validar_numero(mensagem):
     while True:
         try:
             pausa_e_limpar()
-            qtd = int(pegar_int('Quantos itens deseja: '))
-            if qtd < 0:
-                print('A quantidade não pode ser negativa.')
+            qtd = int(pegar_int(mensagem))
+            if qtd <= 0:
+                print('Escolha não pode ser zero ou negativo')
                 continue
             return qtd
         except ValueError:
@@ -82,10 +82,10 @@ def ajuste_estoque():
             print('[1] Para adicionar no estoque\n[0] Para tirar do estoque')
             escolha=int(pegar_int('Escolha a opção desejada: '))
             if escolha==1:
-                qtd = int(pegar_int('Informe a quantidade que deseja adicionar: '))
+                qtd = validar_numero('Informe a quantidade que deseja adicionar: ')
                 return qtd
             elif escolha==0:
-                qtd = int(pegar_int('Informe a quantidade que deseja tira do estoque: '))
+                qtd = validar_numero('Informe a quantidade que deseja tira do estoque: ')   
                 return -qtd
             else:
                 print('Opção inválida')
