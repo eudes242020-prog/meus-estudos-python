@@ -153,7 +153,7 @@ def carregar_venda(clientes):
     for venda in vendas:
         for cliente in clientes:
             if venda[1]==cliente.cpf:
-                lista.append(Venda(cliente,carregar_itens_venda(venda[0]) , venda[2]))
+                lista.append(Venda(cliente,carregar_itens_venda(venda[0]) , venda[2],venda[3]))
     return lista
 #faz parte da tabela itens_venda
 def salvar_itens_venda(produto,ident):

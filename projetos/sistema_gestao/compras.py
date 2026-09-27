@@ -45,9 +45,11 @@ def registrar_compra(login, lista_produtos, lista_vendas):
     print(f"Compra finalizada! Total: R${venda.valor_total:.2f}")
     return venda
 class Venda:
-    def __init__(self, cliente, produtos,valor_total):
+    def __init__(self, cliente, produtos,valor_total,data=None):
         self.cliente=cliente
         self.produtos=produtos
         self.valor_total=valor_total
-        self.data = datetime.datetime.now()
-    
+        if data is None:
+            self.data=datetime.datetime.now()
+        else:
+            self.data = data

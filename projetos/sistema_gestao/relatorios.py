@@ -8,6 +8,7 @@ def listar_vendas(vendas):
     for venda in vendas:
         print(f"\nCliente: {venda.cliente.nome}")
         print(f"CPF: {venda.cliente.cpf}")
+        print(f'Data: {venda.data[8:10]}/{venda.data[5:7]}/{venda.data[0:4]}')
         if not venda.produtos:
             print("Cliente não tem compras!")
         else:
@@ -30,6 +31,7 @@ def vendas_por_cliente(itens,clientes):
             encontrou = True
             print(f"\nCliente: {venda.cliente.nome}")
             print(f"CPF: {venda.cliente.cpf}")
+            print(f'Data: {venda.data[8:10]}/{venda.data[5:7]}/{venda.data[0:4]}')
             if not venda.produtos:
                 print("Cliente não tem compras!")
             else:
