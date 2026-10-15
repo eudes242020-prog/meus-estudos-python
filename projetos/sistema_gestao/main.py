@@ -1,4 +1,4 @@
-from banco_dados import criar_tabela_produto,salvar_produtos,carregar_produtos,compras_produtos,ajuste_de_estoque,apagar_produto,criar_tabela_venda,criar_tabela_itens,salvar_itens_venda,salvar_venda,carregar_venda,carregar_clientes,salvar_clientes,criar_tabela_cliente,verificar_cliente,criar_tabela_admin,salvar_admin,carregar_admin
+from banco_dados import criar_tabela_produto,salvar_produtos,carregar_produtos,ajuste_de_estoque,apagar_produto,criar_tabela_venda,criar_tabela_itens,carregar_venda,carregar_clientes,salvar_clientes,criar_tabela_cliente,verificar_cliente,criar_tabela_admin,salvar_admin,carregar_admin,finalizar_compra
 from produtos import cadastro_produto, ver_produtos, ajuste_produto, remover_produto
 from cadastro_clientes import ver_clientes, cadastro_completo
 from compras import registrar_compra,Venda
@@ -130,10 +130,9 @@ def executar_sistema():
                         venda=registrar_compra(login, carregar_produtos(), carregar_venda(carregar_clientes()))
                         if venda is None:
                             break
-                        for v in venda.produtos:
-                            compras_produtos(v['id'],v['quantidade'])
-                        efetuada=salvar_venda(venda)
-                        salvar_itens_venda(venda,efetuada)
+                        finalizado=finalizar_compra(venda)
+                        if finalizado:
+                            print("ID do produto não existe")
                 pausa_e_limpar()                  
         else:
             print('Opção invalida')

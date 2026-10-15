@@ -98,16 +98,22 @@ def carregar_produtos():
     for produto in receber:
         lista.append(Produto(produto[0],produto[1],produto[2],produto[3]))
     return lista
-def compras_produtos(id ,compra):
-    conexao=conexao_api()
-    item=conexao.cursor()
-    item.execute("UPDATE produtos SET estoque = estoque - ? WHERE id = ?", (compra,id,))
-    verificar = item.rowcount
-    if verificar == 0:
+def finalizar_compra(venda):
+    try:
+        conexao=conexao_api()
+        item=conexao.cursor()
+        item.execute('INSERT INTO vendas (cpf, valor_total, data) VALUES (?, ?, ?)', (venda.cliente.cpf, venda.valor_total, str(venda.data)))
+        identificar=item.lastrowid
+        item=conexao.cursor()
+        for cada in venda.produtos:
+            item.execute('INSERT INTO itens_vendas (venda_id, produto, preco, quantidade) VALUES (?, ?, ?, ?)',(identificar,cada['produto'],cada["preço unitario"], cada['quantidade']))
+            item.execute("UPDATE produtos SET estoque = estoque - ? WHERE id = ?", (cada['quantidade'],cada['id'],))
+            verificar = item.rowcount
+            if verificar == 0:
+                return True
+        conexao.commit()
+    finally:
         conexao.close()
-        return 'Não existe esse id'
-    conexao.commit()
-    conexao.close()
 def ajuste_de_estoque(produto):
     try:
         conexao=conexao_api()
@@ -133,16 +139,6 @@ def apagar_produto(produto):
     finally:
         conexao.close()
 #faz parte da tabela venda
-def salvar_venda(venda):
-    try:
-        conexao=conexao_api()
-        item=conexao.cursor()
-        item.execute('INSERT INTO vendas (cpf, valor_total, data) VALUES (?, ?, ?)', (venda.cliente.cpf, venda.valor_total, str(venda.data)))
-        identificar=item.lastrowid
-        conexao.commit()
-        return identificar
-    finally:
-        conexao.close()
 def carregar_venda(clientes):
     conexao=conexao_api()
     item=conexao.cursor()
@@ -156,13 +152,6 @@ def carregar_venda(clientes):
                 lista.append(Venda(cliente,carregar_itens_venda(venda[0]) , venda[2],venda[3]))
     return lista
 #faz parte da tabela itens_venda
-def salvar_itens_venda(produto,ident):
-    conexao=conexao_api()
-    item=conexao.cursor()
-    for cada in produto.produtos:
-        item.execute('INSERT INTO itens_vendas (venda_id, produto, preco, quantidade) VALUES (?, ?, ?, ?)',(ident,cada['produto'],cada["preço unitario"], cada['quantidade']))
-    conexao.commit()
-    conexao.close()
 def carregar_itens_venda(ident):
     conexao=conexao_api()
     item=conexao.cursor()
