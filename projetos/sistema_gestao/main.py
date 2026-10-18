@@ -131,9 +131,9 @@ def executar_sistema():
                         if venda is None:
                             break
                         finalizado=finalizar_compra(venda)
-                        if finalizado:
+                        if finalizado is None:
                             print("ID do produto não existe")
-                pausa_e_limpar()                  
+                pausa_e_limpar()
         else:
             print('Opção invalida')
             pausa_e_limpar()

@@ -110,8 +110,9 @@ def finalizar_compra(venda):
             item.execute("UPDATE produtos SET estoque = estoque - ? WHERE id = ?", (cada['quantidade'],cada['id'],))
             verificar = item.rowcount
             if verificar == 0:
-                return True
+                return None
         conexao.commit()
+        return True
     finally:
         conexao.close()
 def ajuste_de_estoque(produto):
