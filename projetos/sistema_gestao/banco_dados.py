@@ -104,7 +104,6 @@ def finalizar_compra(venda):
         item=conexao.cursor()
         item.execute('INSERT INTO vendas (cpf, valor_total, data) VALUES (?, ?, ?)', (venda.cliente.cpf, venda.valor_total, str(venda.data)))
         identificar=item.lastrowid
-        item=conexao.cursor()
         for cada in venda.produtos:
             item.execute('INSERT INTO itens_vendas (venda_id, produto, preco, quantidade) VALUES (?, ?, ?, ?)',(identificar,cada['produto'],cada["preço unitario"], cada['quantidade']))
             item.execute("UPDATE produtos SET estoque = estoque - ? WHERE id = ?", (cada['quantidade'],cada['id'],))
