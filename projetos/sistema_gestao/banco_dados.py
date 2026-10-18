@@ -106,7 +106,7 @@ def finalizar_compra(venda):
         identificar=item.lastrowid
         for cada in venda.produtos:
             item.execute('INSERT INTO itens_vendas (venda_id, produto, preco, quantidade) VALUES (?, ?, ?, ?)',(identificar,cada['produto'],cada["preço unitario"], cada['quantidade']))
-            item.execute("UPDATE produtos SET estoque = estoque - ? WHERE id = ?", (cada['quantidade'],cada['id'],))
+            item.execute("UPDATE produtos SET estoque = estoque - ? WHERE id = ?  AND estoque >= ?", (cada['quantidade'],cada['id'],cada['quantidade'],))
             verificar = item.rowcount
             if verificar == 0:
                 return None
